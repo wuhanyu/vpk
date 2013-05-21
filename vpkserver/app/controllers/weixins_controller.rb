@@ -6,14 +6,13 @@ class WeixinsController < ApplicationController
   def show
     render :text => params[:echostr]
   end
-  
-  def index
-    render :text => params[:echostr]
-  end
 
   def create
     if params[:xml][:MsgType] == "text"
       render "echo", :formats => :xml
+    end
+    if params[:xml][:MsgType] == "voice"
+      render "voicereply", :formats => :xml
     end
   end
   
