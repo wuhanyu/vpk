@@ -1,4 +1,5 @@
 Vpkserver::Application.routes.draw do
+  resource :weixin
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

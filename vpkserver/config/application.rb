@@ -64,5 +64,8 @@ module Vpkserver
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    
+    # 微信 API token
+    config.weixin_token = "vpk"
   end
 end
