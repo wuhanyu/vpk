@@ -9,10 +9,12 @@ class WeixinsController < ApplicationController
 
   def create
     if params[:xml][:MsgType] == "text"
+      recordlog
       render "echo", :formats => :xml
-    end
-    if params[:xml][:MsgType] == "voice"
+    elsif params[:xml][:MsgType] == "voice"
       render "voicereply", :formats => :xml
+    else
+      render "errorreply", :formats => :xml
     end
   end
   
@@ -21,5 +23,16 @@ class WeixinsController < ApplicationController
   def check_weixin_legality
     array = [Rails.configuration.weixin_token, params[:timestamp], params[:nonce]].sort
     render :text => "Forbidden", :status => 403 if params[:signature] != Digest::SHA1.hexdigest(array.join)
+  end
+  
+  private
+  # log
+  def recordlog
+    log = Log.new(:content=> params[:xml][:Content],
+    :type=> params[:xml][:MsgType],
+    :time=> Time.at(params[:xml][:CreateTime].to_i),
+    :fromUser=> params[:xml][:FromUserName],
+    )
+    log.save
   end
 end
