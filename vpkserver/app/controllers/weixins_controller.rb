@@ -33,34 +33,35 @@ class WeixinsController < ApplicationController
   def react
     @text = params[:xml][:Content]
     if @text == "听"
-      @user.user_status = "rate"
-      @user.rate_at = "456"
-      @user.rate_count = 1
-      @user.save
+      @pkuser.user_status = "rate"
+      @pkuser.rate_at = "456"
+      @pkuser.rate_count = 1
+      @pkuser.save
       render "rate", :formats => :xml
     elsif @text.downcase == "a"
-      @user.rate_count = @user.rate_count + 1
-      if @user.rate_count > 5
-        @user.user_status = "normal"
+      @pkuser.rate_count = @pkuser.rate_count + 1
+      if @pkuser.rate_count > 5
+        @pkuser.user_status = "normal"
         render "rateover", :formats => :xml
       else
-        @user.user_status = "rate"
+        @pkuser.user_status = "rate"
         render "rate", :formats => :xml
       end
-      @user.save
+      @pkuser.save
     elsif @text.downcase == "b"
-      @user.rate_count = @user.rate_count + 1
-      if @user.rate_count > 5
-        @user.user_status = "normal"
+      @pkuser.rate_count = @pkuser.rate_count + 1
+      if @pkuser.rate_count > 5
+        @pkuser.user_status = "normal"
         render "rateover", :formats => :xml
       else
-        @user.user_status = "rate"
+        @pkuser.user_status = "rate"
         render "rate", :formats => :xml
       end
-      @user.save
+      @pkuser.save
     elsif @text.downcase == "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
+      @users = User.order("overall_rating DESC").limit(10)
       render "rank", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
@@ -70,8 +71,7 @@ class WeixinsController < ApplicationController
       render "voicereply", :formats => :xml
     else
       render "echo", :formats => :xml
-    end
-    
+    end 
   end
   
   private
@@ -95,18 +95,18 @@ class WeixinsController < ApplicationController
   private
   #user
   def createUserIfHasnt
-    @user = User.where(:openid => params[:xml][:FromUserName]).first
-    if @user != nil
-      @user.last_active_at = Time.now
-      @user.user_status = @user_status
-      @user.save
+    @pkuser = Pkuser.where(:openid => params[:xml][:FromUserName]).first
+    if @pkuser != nil
+      @pkuser.last_active_at = Time.now
+      @pkuser.user_status = @user_status
+      @pkuser.save
     else
-      user_count = User.count
-      @user = User.new(:openid => params[:xml][:FromUserName],
+      user_count = Pkuser.count
+      @pkuser = Pkuser.new(:openid => params[:xml][:FromUserName],
       :created_at => Time.now,
       :last_active_at => Time.now,
       :uid => (user_count + 1).to_s)
-      @user.save
+      @pkuser.save
     end
   end
 end

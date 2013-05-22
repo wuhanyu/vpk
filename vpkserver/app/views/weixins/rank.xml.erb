@@ -12,129 +12,25 @@
 		<![CDATA[news]]>
 	</MsgType>
 	<ArticleCount>
-		10
+		<%= @users.count %>
 	</ArticleCount>
 	<Articles>
-		<item>
-			<Title><![CDATA[毛可(冠军)]]></Title>
-			<Description>
-				<![CDATA[萌妹子大战]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/19/24a8a2d0-c06b-11e2-8370-00163e0104d9_128_98_tiny.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[李姣阳]]></Title>
-			<Description>
-				<![CDATA[第二名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第三名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第四名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第五名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第六名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第七名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第八名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第九名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
-		<item>
-			<Title><![CDATA[title]]></Title>
-			<Description>
-				<![CDATA[第十名]]>
-			</Description>
-			<PicUrl>
-				<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/21/4af1433a-c1ff-11e2-8370-00163e0104d9_385_300_normal.jpg]]>
-			</PicUrl>
-			<Url>
-				<![CDATA[url]]>
-			</Url>
-		</item>
+		<% count = 0%>
+		<% @users.each do |user| %>
+		<% count = count + 1%>
+			<item>
+				<Title><![CDATA[<%= user.name %> (Top <%= count %>)]]></Title>
+				<Description>
+					<![CDATA[Top <%= count %>]]>
+				</Description>
+				<PicUrl>
+					<![CDATA[http://211.147.15.40/wdcres/wdc/images/201305/19/24a8a2d0-c06b-11e2-8370-00163e0104d9_128_98_tiny.jpg]]>
+				</PicUrl>
+				<Url>
+					<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+				</Url>
+			</item>
+		<% end %>
 	</Articles>
 	<FuncFlag>
 		1
