@@ -9,9 +9,10 @@ class WeixinsController < ApplicationController
 
   def create 
     if params[:xml][:MsgType] == "text" 
-      render "echo", :formats => :xml
+      react
     elsif params[:xml][:MsgType] == "voice"
       render "voicereply", :formats => :xml
+      @user_status = "normal"
     elsif params[:xml][:MsgType] == "event"
       if params[:xml][:Event] == "subscribe"
         render "welcome", :formats => :xml
@@ -21,8 +22,23 @@ class WeixinsController < ApplicationController
     else
       render "errorreply", :formats => :xml
     end
+    
     createUserIfHasnt
     recordlog
+  end
+  
+  private
+  # 根据文本消息进行状态变化
+  def react
+    @text = params[:xml][:Content]
+    if @text == "听"
+      @user_status = "rate"
+    elsif @text.downcase == "pk"
+      @user_status = "pk"
+    else
+      @user_status = "normal"
+    end
+    render "echo", :formats => :xml
   end
   
   private
@@ -49,6 +65,7 @@ class WeixinsController < ApplicationController
     @user = User.where(:openid => params[:xml][:FromUserName]).first
     if @user != nil
       @user.last_active_at = Time.now
+      @user.user_status = @user_status
       @user.save
     else
       user_count = User.count

@@ -7,5 +7,6 @@ class User
   key :last_active_at, Time
   key :avatar_url, String
   key :nickname, String
+  key :user_status, String
 
 end
