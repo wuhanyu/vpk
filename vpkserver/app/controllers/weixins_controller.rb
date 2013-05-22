@@ -7,11 +7,12 @@ class WeixinsController < ApplicationController
     render :text => params[:echostr]
   end
 
-  def create 
+  def create
+    createUserIfHasnt
     if params[:xml][:MsgType] == "text" 
       react
     elsif params[:xml][:MsgType] == "voice"
-      render "voicereply", :formats => :xml
+      render "confirm", :formats => :xml
       @user_status = "normal"
     elsif params[:xml][:MsgType] == "event"
       if params[:xml][:Event] == "subscribe"
@@ -23,7 +24,7 @@ class WeixinsController < ApplicationController
       render "errorreply", :formats => :xml
     end
     
-    createUserIfHasnt
+    
     recordlog
   end
   
@@ -31,12 +32,33 @@ class WeixinsController < ApplicationController
   # 根据文本消息进行状态变化
   def react
     @text = params[:xml][:Content]
-    @user_status = "normal"
     if @text == "听"
-      @user_status = "rate"
+      @user.user_status = "rate"
+      @user.rate_at = "456"
+      @user.rate_count = 1
+      @user.save
       render "rate", :formats => :xml
+    elsif @text.downcase == "a"
+      @user.rate_count = @user.rate_count + 1
+      if @user.rate_count > 5
+        @user.user_status = "normal"
+        render "rateover", :formats => :xml
+      else
+        @user.user_status = "rate"
+        render "rate", :formats => :xml
+      end
+      @user.save
+    elsif @text.downcase == "b"
+      @user.rate_count = @user.rate_count + 1
+      if @user.rate_count > 5
+        @user.user_status = "normal"
+        render "rateover", :formats => :xml
+      else
+        @user.user_status = "rate"
+        render "rate", :formats => :xml
+      end
+      @user.save
     elsif @text.downcase == "pk"
-      @user_status = "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
       render "rank", :formats => :xml
@@ -44,6 +66,8 @@ class WeixinsController < ApplicationController
       render "help", :formats => :xml
     elsif @text == "退出"
       render "exit", :formats => :xml
+    elsif @text == "保存"
+      render "voicereply", :formats => :xml
     else
       render "echo", :formats => :xml
     end
