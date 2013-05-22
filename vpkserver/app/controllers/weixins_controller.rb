@@ -31,14 +31,23 @@ class WeixinsController < ApplicationController
   # 根据文本消息进行状态变化
   def react
     @text = params[:xml][:Content]
+    @user_status = "normal"
     if @text == "听"
       @user_status = "rate"
+      render "rate", :formats => :xml
     elsif @text.downcase == "pk"
       @user_status = "pk"
+      render "pk", :formats => :xml
+    elsif @text == "排行榜"
+      render "rank", :formats => :xml
+    elsif @text == "帮助"
+      render "help", :formats => :xml
+    elsif @text == "退出"
+      render "exit", :formats => :xml
     else
-      @user_status = "normal"
+      render "echo", :formats => :xml
     end
-    render "echo", :formats => :xml
+    
   end
   
   private

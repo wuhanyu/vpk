@@ -1,0 +1,58 @@
+<xml>
+	<ToUserName>
+		<![CDATA[<%= params[:xml][:FromUserName] %>]]>
+	</ToUserName>
+	<FromUserName>
+		<![CDATA[<%= params[:xml][:ToUserName] %>]]>
+	</FromUserName>
+	<CreateTime>
+		<%= Time.now.to_i %>
+	</CreateTime>
+	<MsgType>
+		<![CDATA[music]]>
+	</MsgType>
+	<Music>
+		<Title><![CDATA[TITLE1]]></Title>
+		<Description>
+			<![CDATA[DESCRIPTION]]>
+		</Description>
+		<MusicUrl>
+			<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+		</MusicUrl>
+		<HQMusicUrl>
+			<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+		</HQMusicUrl>
+	</Music>
+	<FuncFlag>
+		0
+	</FuncFlag>
+</xml>
+<xml>
+	<ToUserName>
+		<![CDATA[<%= params[:xml][:FromUserName] %>]]>
+	</ToUserName>
+	<FromUserName>
+		<![CDATA[<%= params[:xml][:ToUserName] %>]]>
+	</FromUserName>
+	<CreateTime>
+		<%= Time.now.to_i %>
+	</CreateTime>
+	<MsgType>
+		<![CDATA[music]]>
+	</MsgType>
+	<Music>
+		<Title><![CDATA[TITLE2]]></Title>
+		<Description>
+			<![CDATA[DESCRIPTION]]>
+		</Description>
+		<MusicUrl>
+			<![CDATA[MUSIC_Url]]>
+		</MusicUrl>
+		<HQMusicUrl>
+			<![CDATA[HQ_MUSIC_Url]]>
+		</HQMusicUrl>
+	</Music>
+	<FuncFlag>
+		0
+	</FuncFlag>
+</xml>
