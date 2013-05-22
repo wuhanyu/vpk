@@ -7,8 +7,7 @@ class WeixinsController < ApplicationController
     render :text => params[:echostr]
   end
 
-  def create
-    recordlog
+  def create 
     if params[:xml][:MsgType] == "text" 
       render "echo", :formats => :xml
     elsif params[:xml][:MsgType] == "voice"
@@ -16,6 +15,7 @@ class WeixinsController < ApplicationController
     else
       render "errorreply", :formats => :xml
     end
+    recordlog
   end
   
   private
