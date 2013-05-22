@@ -8,8 +8,8 @@ class WeixinsController < ApplicationController
   end
 
   def create
-    if params[:xml][:MsgType] == "text"
-      recordlog
+    recordlog
+    if params[:xml][:MsgType] == "text" 
       render "echo", :formats => :xml
     elsif params[:xml][:MsgType] == "voice"
       render "voicereply", :formats => :xml
