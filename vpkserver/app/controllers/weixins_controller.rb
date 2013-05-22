@@ -12,9 +12,16 @@ class WeixinsController < ApplicationController
       render "echo", :formats => :xml
     elsif params[:xml][:MsgType] == "voice"
       render "voicereply", :formats => :xml
+    elsif params[:xml][:MsgType] == "event"
+      if params[:xml][:Event] == "subscribe"
+        render "welcome", :formats => :xml
+      else
+        render "errorreply", :formats => :xml
+      end
     else
       render "errorreply", :formats => :xml
     end
+    createUserIfHasnt
     recordlog
   end
   
@@ -28,11 +35,28 @@ class WeixinsController < ApplicationController
   private
   # log
   def recordlog
-    log = Log.new(:content=> params[:xml][:Content],
+    @log = Log.new(:content=> params[:xml][:Content],
     :type=> params[:xml][:MsgType],
     :time=> Time.at(params[:xml][:CreateTime].to_i),
     :fromUser=> params[:xml][:FromUserName],
     )
-    log.save
+    @log.save
+  end
+  
+  private
+  #user
+  def createUserIfHasnt
+    @user = User.where(:openid => params[:xml][:FromUserName]).first
+    if @user != nil
+      @user.last_active_at = Time.now
+      @user.save
+    else
+      user_count = User.count
+      @user = User.new(:openid => params[:xml][:FromUserName],
+      :created_at => Time.now,
+      :last_active_at => Time.now,
+      :uid => (user_count + 1).to_s)
+      @user.save
+    end
   end
 end
