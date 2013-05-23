@@ -46,7 +46,7 @@ class WeixinsController < ApplicationController
       render "pk", :formats => :xml
     elsif @text == "排行榜"
       @users = User.order("overall_rating DESC").limit(10)
-      render "rank", :formats => :xml
+      render "rankbak", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
     elsif @text == "退出"
@@ -148,6 +148,9 @@ class WeixinsController < ApplicationController
     @command = @text.split(" ")[0]
     if @command == "修改昵称"
       render "modifynick", :formats => :xml
+    elsif @command == "排名"
+      @user = User.where(:name=>@text.split(" ")[1]).first
+      render "myrank", :formats => :xml
     end
   end
   

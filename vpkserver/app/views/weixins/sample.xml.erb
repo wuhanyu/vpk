@@ -3,6 +3,10 @@
     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
     <CreateTime><%= Time.now.to_i %></CreateTime>
     <MsgType><![CDATA[text]]></MsgType>
-    <Content><![CDATA[『酝酿好情绪，有感情的说出这段话』<%= @sampletext%>]]></Content>
+    <Content><![CDATA[酝酿好情绪，有感情地说出这段话：
+    	
+『<%= @sampletext%>』
+    	
+不满意？继续回复【台词】或【笑话】换一段吧~]]></Content>
     <FuncFlag>0</FuncFlag>
 </xml>
