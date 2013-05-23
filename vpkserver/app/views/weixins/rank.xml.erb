@@ -19,7 +19,7 @@
 		<% @users.each do |user| %>
 		<% count = count + 1%>
 			<item>
-				<Title><![CDATA[<%= user.name %> Top <%= count %> (<%= user.overall_rating%> 分)]]></Title>
+				<Title><![CDATA[No.<%= count %> <%= user.name %> (<%= user.overall_rating%> 分)]]></Title>
 				<Description>
 					<![CDATA[Top <%= count %>]]>
 				</Description>
@@ -27,7 +27,7 @@
 					<![CDATA[<%= user.avatar_url %>]]>
 				</PicUrl>
 				<Url>
-					<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+					<![CDATA[http://124.16.139.178/users/<%= user.uid %>]]>
 				</Url>
 			</item>
 		<% end %>
