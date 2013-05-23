@@ -12,15 +12,15 @@
 		<![CDATA[music]]>
 	</MsgType>
 	<Music>
-		<Title><![CDATA[TITLE1]]></Title>
+		<Title><![CDATA[<%= @rate.text %>]]></Title>
 		<Description>
-			<![CDATA[DESCRIPTION]]>
+			<![CDATA[回复【A】或【B】选出胜者，回复【P】两人打平]]>
 		</Description>
 		<MusicUrl>
-			<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+			<![CDATA[<%= @rate.sound_url %>]]>
 		</MusicUrl>
 		<HQMusicUrl>
-			<![CDATA[http://211.147.15.40/wdcres/wdc/sounds/201305/22/4af3d91e-c2b9-11e2-8370-00163e0104d9_3_.mp3]]>
+			<![CDATA[<%= @rate.sound_url %>]]>
 		</HQMusicUrl>
 	</Music>
 	<FuncFlag>

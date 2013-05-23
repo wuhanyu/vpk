@@ -34,16 +34,12 @@ class WeixinsController < ApplicationController
     @text = params[:xml][:Content]
     if @text == "听"
       @pkuser.user_status = "rate"
-      @pkuser.rate_at = "456"
+      getRate
+      @pkuser.rate_at = @rate.rateid
       @pkuser.rate_count = 1
       @pkuser.save
       render "rate", :formats => :xml
-    elsif @text.downcase == "a"
-      checkRate
-      if @flag
-        rateCount
-      end
-    elsif @text.downcase == "b"
+    elsif (@text.downcase == "a" || @text.downcase == "b")
       checkRate
       if @flag
         rateCount
@@ -59,6 +55,8 @@ class WeixinsController < ApplicationController
       render "exit", :formats => :xml
     elsif @text == "保存"
       render "voicereply", :formats => :xml
+    elsif @text.include? " "
+      text_command
     else
       render "echo", :formats => :xml
     end 
@@ -120,8 +118,32 @@ class WeixinsController < ApplicationController
         render "rateover", :formats => :xml
       else
         @pkuser.user_status = "rate"
+        getRate
+        @pkuser.rate_at = @rate.rateid
         render "rate", :formats => :xml
       end
       @pkuser.save    
+  end
+  
+  private
+  #give rate
+  def getRate
+    @rate = Rate.limit(1).offset(rand(Rate.count)).first
+  end
+  
+  private
+  #commen
+  def text_command
+    @command = @text.split(" ")[0]
+    if @command == "修改昵称"
+      render "modifynick", :formats => :xml
+    end
+  end
+  
+  private
+  #record result
+  def recordResult
+    @match = Match.new()
+    @match 
   end
 end
