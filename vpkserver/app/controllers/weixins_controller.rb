@@ -53,6 +53,12 @@ class WeixinsController < ApplicationController
       render "exit", :formats => :xml
     elsif @text == "保存"
       render "voicereply", :formats => :xml
+    elsif @text == "笑话"
+      @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
+      render "sample", :formats => :xml
+    elsif @text == "台词"
+      @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
+      render "sample", :formats => :xml    
     elsif @text.include? "听"
       @pkuser.user_status = "rate"
       getRate
