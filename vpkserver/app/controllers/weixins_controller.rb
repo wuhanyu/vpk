@@ -39,25 +39,15 @@ class WeixinsController < ApplicationController
       @pkuser.save
       render "rate", :formats => :xml
     elsif @text.downcase == "a"
-      @pkuser.rate_count = @pkuser.rate_count + 1
-      if @pkuser.rate_count > 5
-        @pkuser.user_status = "normal"
-        render "rateover", :formats => :xml
-      else
-        @pkuser.user_status = "rate"
-        render "rate", :formats => :xml
+      checkRate
+      if @flag
+        rateCount
       end
-      @pkuser.save
     elsif @text.downcase == "b"
-      @pkuser.rate_count = @pkuser.rate_count + 1
-      if @pkuser.rate_count > 5
-        @pkuser.user_status = "normal"
-        render "rateover", :formats => :xml
-      else
-        @pkuser.user_status = "rate"
-        render "rate", :formats => :xml
+      checkRate
+      if @flag
+        rateCount
       end
-      @pkuser.save
     elsif @text.downcase == "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
@@ -98,7 +88,6 @@ class WeixinsController < ApplicationController
     @pkuser = Pkuser.where(:openid => params[:xml][:FromUserName]).first
     if @pkuser != nil
       @pkuser.last_active_at = Time.now
-      @pkuser.user_status = @user_status
       @pkuser.save
     else
       user_count = Pkuser.count
@@ -108,5 +97,31 @@ class WeixinsController < ApplicationController
       :uid => (user_count + 1).to_s)
       @pkuser.save
     end
+  end
+  
+  private
+  #check rate
+  def checkRate
+    if @pkuser.user_status == "rate"
+      @flag = true
+    else
+      render "errorab", :formats => :xml
+      @flag = false
+    end
+  end
+  
+  
+  private
+  #rate count
+  def rateCount
+      @pkuser.rate_count = @pkuser.rate_count + 1
+      if @pkuser.rate_count > 5
+        @pkuser.user_status = "normal"
+        render "rateover", :formats => :xml
+      else
+        @pkuser.user_status = "rate"
+        render "rate", :formats => :xml
+      end
+      @pkuser.save    
   end
 end
