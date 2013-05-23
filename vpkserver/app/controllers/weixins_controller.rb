@@ -39,9 +39,11 @@ class WeixinsController < ApplicationController
       @pkuser.rate_count = 1
       @pkuser.save
       render "rate", :formats => :xml
-    elsif (@text.downcase == "a" || @text.downcase == "b")
+    elsif (@text.downcase == "a" || @text.downcase == "b" || @text.downcase == "p")
+      @rs = @text.downcase
       checkRate
       if @flag
+        recordResult
         rateCount
       end
     elsif @text.downcase == "pk"
@@ -143,7 +145,23 @@ class WeixinsController < ApplicationController
   private
   #record result
   def recordResult
-    @match = Match.new()
-    @match 
+    @rate = Rate.where(:rateid => @pkuser.rate_at).first
+    @match = Newmatch.new()
+    @match.uid_a = @rate.uid_a
+    @match.uid_b = @rate.uid_b
+    @match.category = @rate.category
+    @match.rid_a = @rate.rid_a
+    @match.rid_b = @rate.rid_b
+    @match.rater = @pkuser.openid
+    @match.created_at = Time.now
+    @match.mid = (Newmatch.count + Oldmatch.count + 1).to_s
+    if (@rs == "a")
+      @match.result = 1
+    elsif (@rs == "b")
+      @match.result = -1
+    else
+      @match.result = 0
+    end
+    @match.save
   end
 end
