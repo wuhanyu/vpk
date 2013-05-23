@@ -19,7 +19,7 @@
 		<% @users.each do |user| %>
 		<% count = count + 1%>
 			<item>
-				<Title><![CDATA[<%= user.name %> (Top <%= count %>)]]></Title>
+				<Title><![CDATA[<%= user.name %> Top <%= count %> (<%= user.overall_rating%> 分)]]></Title>
 				<Description>
 					<![CDATA[Top <%= count %>]]>
 				</Description>

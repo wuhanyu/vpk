@@ -32,13 +32,9 @@ class WeixinsController < ApplicationController
   # 根据文本消息进行状态变化
   def react
     @text = params[:xml][:Content]
-    if @text == "听"
-      @pkuser.user_status = "rate"
-      getRate
-      @pkuser.rate_at = @rate.rateid
-      @pkuser.rate_count = 1
-      @pkuser.save
-      render "rate", :formats => :xml
+    if @text == "随便听"
+      @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
+      render "randomplay", :formats => :xml
     elsif (@text.downcase == "a" || @text.downcase == "b" || @text.downcase == "p")
       @rs = @text.downcase
       checkRate
@@ -46,7 +42,7 @@ class WeixinsController < ApplicationController
         recordResult
         rateCount
       end
-    elsif @text.downcase == "pk"
+    elsif @text.downcase.include? "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
       @users = User.order("overall_rating DESC").limit(10)
@@ -57,10 +53,17 @@ class WeixinsController < ApplicationController
       render "exit", :formats => :xml
     elsif @text == "保存"
       render "voicereply", :formats => :xml
+    elsif @text.include? "听"
+      @pkuser.user_status = "rate"
+      getRate
+      @pkuser.rate_at = @rate.rateid
+      @pkuser.rate_count = 1
+      @pkuser.save
+      render "rate", :formats => :xml
     elsif @text.include? " "
       text_command
     else
-      render "echo", :formats => :xml
+      render "help", :formats => :xml
     end 
   end
   
