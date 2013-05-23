@@ -157,8 +157,12 @@ class WeixinsController < ApplicationController
     @match.mid = (Newmatch.count + Oldmatch.count + 1).to_s
     if (@rs == "a")
       @match.result = 1
+      @rate.wincount_a = @rate.wincount_a + 1
+      @rate.save 
     elsif (@rs == "b")
       @match.result = -1
+      @rate.wincount_b = @rate.wincount_b + 1
+      @rate.save 
     else
       @match.result = 0
     end

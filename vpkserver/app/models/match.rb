@@ -8,4 +8,5 @@ class Match
   key :created_at, Time
   key :rid_a, String
   key :rid_b, String
+  key :mid, String
 end
