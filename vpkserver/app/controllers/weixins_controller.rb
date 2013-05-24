@@ -116,7 +116,9 @@ class WeixinsController < ApplicationController
       @user = User.new(:openid => params[:xml][:FromUserName],
       :created_at => Time.now,
       :last_active_at => Time.now,
-      :meng => [])
+      :meng => [],
+      :menged_count => 0,
+      :rank => 0)
       @user.save
     end
   end
@@ -196,18 +198,18 @@ class WeixinsController < ApplicationController
     if @command == "排名"
       @user = User.where(:name=>@text.split(" ")[1]).first
       render "myrank", :formats => :xml
-    elsif @command == "排名"
+    elsif @command == "萌"
       @tuser = User.where(:name=>@target).first
       if @tuser == nil
         @texttext = "您要萌的用户不存在哦，请检查用户名是否输入正确"
         render "texttext", :formats => :xml
       else
         @mengs = @user.meng
-        if @mengs.include? @tuser.name
+        if @mengs.include? @tuser.uid
           @texttext = "您已经萌过啦~换个人萌萌呗~"
           render "texttext", :formats => :xml
         else
-          @mengs.push(@tuser.name)
+          @mengs.push(@tuser.uid)
           @user.meng = @mengs
           @user.save
           @tuser.menged_count = @tuser.menged_count + 1

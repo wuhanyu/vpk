@@ -12,4 +12,5 @@ class User
   key :sex, Integer
   key :meng, Array
   key :menged_count, Integer
+  key :rank, Integer
 end
