@@ -9,21 +9,27 @@ class WeixinsController < ApplicationController
 
   def create
     createUserIfHasnt
-    if params[:xml][:MsgType] == "text" 
-      react
-    elsif params[:xml][:MsgType] == "voice"
-      render "confirm", :formats => :xml
-      @user_status = "normal"
-    elsif params[:xml][:MsgType] == "event"
-      if params[:xml][:Event] == "subscribe"
-        render "welcome", :formats => :xml
+    checkNewUser
+    if @flag == true
+      if params[:xml][:MsgType] == "text" 
+        react
+      elsif params[:xml][:MsgType] == "voice"
+        render "confirm", :formats => :xml
+        @user_status = "normal"
+      elsif params[:xml][:MsgType] == "event"
+        if params[:xml][:Event] == "subscribe"
+          render "welcome", :formats => :xml
+        else
+          render "errorreply", :formats => :xml
+        end
+      elsif params[:xml][:MsgType] == "image"
+        @pkuser.avatar_url = params[:xml][:PicUrl]
+        @pkuser.save
+        render "imageupload", :formats => :xml
       else
         render "errorreply", :formats => :xml
       end
-    else
-      render "errorreply", :formats => :xml
     end
-    
     
     recordlog
   end
@@ -107,6 +113,34 @@ class WeixinsController < ApplicationController
       :last_active_at => Time.now,
       :uid => (user_count + 1).to_s)
       @pkuser.save
+    end
+  end
+  
+  private
+  #create user
+  def checkNewUser
+    @flag = true
+    if @pkuser.name == nil
+      @flag = false
+      @text = params[:xml][:Content]
+      if (@text.include? " ")
+        @name = @text.split(" ")[0]
+        @sex = @text.split(" ")[1]
+        if (@sex=="男" or @sex=="女")
+          @pkuser.name = @name
+          @pkuser.sex = 0
+          if @sex=="女"
+            @pkuser.sex = 1
+          end
+          @pkuser.save
+          render "after", :formats => :xml
+        else
+          @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
+          render "texttext", :formats => :xml
+        end
+      else
+        render "newuser", :formats => :xml
+      end
     end
   end
   

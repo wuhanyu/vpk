@@ -7,5 +7,7 @@ class Pkuser
   key :user_status, String
   key :rate_at, String
   key :rate_count, Integer
-
+  key :avatar_url, String
+  key :name, String
+  key :sex, Integer
 end

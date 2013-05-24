@@ -1,0 +1,8 @@
+<xml>
+    <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+    <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+    <CreateTime><%= Time.now.to_i %></CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[您的头像已经上传成功！回复【PK】或【听】参与游戏吧~!]]></Content>
+    <FuncFlag>0</FuncFlag>
+</xml>
