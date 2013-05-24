@@ -9,7 +9,10 @@ class WeixinsController < ApplicationController
 
   def create
     createUserIfHasnt
-    checkNewUser
+    @flag = true
+    if params[:xml][:MsgType] != "event"
+      checkNewUser
+    end
     if @flag == true
       if params[:xml][:MsgType] == "text" 
         react
@@ -56,17 +59,19 @@ class WeixinsController < ApplicationController
       render "rank", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
-    elsif @text == "退出"
-      render "exit", :formats => :xml
     elsif @text == "保存"
       @user.user_status = "normal"
       render "voicereply", :formats => :xml
+    elsif @text == "我的信息"
+      render "myinfo", :formats => :xml
     elsif @text == "笑话"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
       render "sample", :formats => :xml
     elsif @text == "台词"
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
-      render "sample", :formats => :xml    
+      render "sample", :formats => :xml
+    elsif @text == "清唱"
+      render "onlyvoice", :formats => :xml
     elsif @text.include? "听"
       @user.user_status = "rate"
       getRate
@@ -118,7 +123,6 @@ class WeixinsController < ApplicationController
   private
   #create user
   def checkNewUser
-    @flag = true
     if @user.name == nil
       @flag = false
       @text = params[:xml][:Content]
@@ -187,9 +191,7 @@ class WeixinsController < ApplicationController
   #commen
   def text_command
     @command = @text.split(" ")[0]
-    if @command == "修改昵称"
-      render "modifynick", :formats => :xml
-    elsif @command == "排名"
+    if @command == "排名"
       @user = User.where(:name=>@text.split(" ")[1]).first
       render "myrank", :formats => :xml
     end
