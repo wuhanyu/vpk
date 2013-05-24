@@ -23,8 +23,8 @@ class WeixinsController < ApplicationController
           render "errorreply", :formats => :xml
         end
       elsif params[:xml][:MsgType] == "image"
-        @pkuser.avatar_url = params[:xml][:PicUrl]
-        @pkuser.save
+        @user.avatar_url = params[:xml][:PicUrl]
+        @user.save
         render "imageupload", :formats => :xml
       else
         render "errorreply", :formats => :xml
@@ -49,7 +49,7 @@ class WeixinsController < ApplicationController
         rateCount
       end
     elsif @text.downcase.include? "pk"
-      @pkuser.user_status = "pk"
+      @user.user_status = "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
       @users = User.order("overall_rating DESC").limit(10)
@@ -59,7 +59,7 @@ class WeixinsController < ApplicationController
     elsif @text == "退出"
       render "exit", :formats => :xml
     elsif @text == "保存"
-      @pkuser.user_status = "normal"
+      @user.user_status = "normal"
       render "voicereply", :formats => :xml
     elsif @text == "笑话"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
@@ -68,17 +68,17 @@ class WeixinsController < ApplicationController
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
       render "sample", :formats => :xml    
     elsif @text.include? "听"
-      @pkuser.user_status = "rate"
+      @user.user_status = "rate"
       getRate
-      @pkuser.rate_at = @rate.rateid
-      @pkuser.rate_count = 1
+      @user.rate_at = @rate.rateid
+      @user.rate_count = 1
       render "rate", :formats => :xml
     elsif @text.include? " "
       text_command
     else
       render "help", :formats => :xml
     end
-    @pkuser.save
+    @user.save
   end
   
   private
@@ -102,17 +102,16 @@ class WeixinsController < ApplicationController
   private
   #user
   def createUserIfHasnt
-    @pkuser = Pkuser.where(:openid => params[:xml][:FromUserName]).first
-    if @pkuser != nil
-      @pkuser.last_active_at = Time.now
-      @pkuser.save
+    @user = User.where(:openid => params[:xml][:FromUserName]).first
+    if @user != nil
+      @user.last_active_at = Time.now
+      @user.save
     else
-      user_count = Pkuser.count
-      @pkuser = Pkuser.new(:openid => params[:xml][:FromUserName],
+      user_count = User.count
+      @user = User.new(:openid => params[:xml][:FromUserName],
       :created_at => Time.now,
-      :last_active_at => Time.now,
-      :uid => (user_count + 1).to_s)
-      @pkuser.save
+      :last_active_at => Time.now)
+      @user.save
     end
   end
   
@@ -120,21 +119,21 @@ class WeixinsController < ApplicationController
   #create user
   def checkNewUser
     @flag = true
-    if @pkuser.name == nil
+    if @user.name == nil
       @flag = false
       @text = params[:xml][:Content]
       if (@text.include? " ")
         @name = @text.split(" ")[0]
-        @tmpuser = Pkuser.where(:name => @name).first
+        @tmpuser = User.where(:name => @name).first
         if @tmpuser == nil
           @sex = @text.split(" ")[1]
           if (@sex=="男" or @sex=="女")
-            @pkuser.name = @name
-            @pkuser.sex = 0
+            @user.name = @name
+            @user.sex = 0
             if @sex=="女"
-              @pkuser.sex = 1
+              @user.sex = 1
             end
-            @pkuser.save
+            @user.save
             render "after", :formats => :xml
           else
             @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
@@ -153,7 +152,7 @@ class WeixinsController < ApplicationController
   private
   #check rate
   def checkRate
-    if @pkuser.user_status == "rate"
+    if @user.user_status == "rate"
       @flag = true
     else
       render "errorab", :formats => :xml
@@ -165,17 +164,17 @@ class WeixinsController < ApplicationController
   private
   #rate count
   def rateCount
-      @pkuser.rate_count = @pkuser.rate_count + 1
-      if @pkuser.rate_count > 5
-        @pkuser.user_status = "normal"
+      @user.rate_count = @user.rate_count + 1
+      if @user.rate_count > 5
+        @user.user_status = "normal"
         render "rateover", :formats => :xml
       else
-        @pkuser.user_status = "rate"
+        @user.user_status = "rate"
         getRate
-        @pkuser.rate_at = @rate.rateid
+        @user.rate_at = @rate.rateid
         render "rate", :formats => :xml
       end
-      @pkuser.save    
+      @user.save    
   end
   
   private
@@ -199,14 +198,14 @@ class WeixinsController < ApplicationController
   private
   #record result
   def recordResult
-    @rate = Rate.where(:rateid => @pkuser.rate_at).first
+    @rate = Rate.where(:rateid => @user.rate_at).first
     @match = Newmatch.new()
     @match.uid_a = @rate.uid_a
     @match.uid_b = @rate.uid_b
     @match.category = @rate.category
     @match.rid_a = @rate.rid_a
     @match.rid_b = @rate.rid_b
-    @match.rater = @pkuser.openid
+    @match.rater = @user.openid
     @match.created_at = Time.now
     @match.mid = (Newmatch.count + Oldmatch.count + 1).to_s
     if (@rs == "a")
