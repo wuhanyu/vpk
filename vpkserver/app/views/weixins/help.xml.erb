@@ -3,13 +3,14 @@
     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
     <CreateTime><%= Time.now.to_i %></CreateTime>
     <MsgType><![CDATA[text]]></MsgType>
-    <Content><![CDATA[我是精灵小助手，刚听到你叫我~/::$
-直接回复【PK】参与评选吧~萌妹子~就不要再娇羞啦
+    <Content><![CDATA[Hi， <%= @pkuser.name%>~
+我是精灵小助手，刚听到你叫我~/::$
+直接回复【PK】参与评选吧~
 回复【听】听妹子声音；
 回复【排行榜】查看萌妹子排行榜；
 回复【退出】退出游戏；
 回复【随便听】有惊喜~
-下次记得再回复【帮助】召唤我哟~/::*
+下次迷惑的时候记得再回复【帮助】召唤我哟~/::*
 ]]></Content>
     <FuncFlag>0</FuncFlag>
 </xml>
