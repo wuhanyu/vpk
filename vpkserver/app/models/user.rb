@@ -10,4 +10,6 @@ class User
   key :avatar_url, String
   key :name, String
   key :sex, Integer
+  key :meng, Array
+  key :menged_count, Integer
 end
