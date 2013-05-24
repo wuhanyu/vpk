@@ -43,15 +43,17 @@ class WeixinsController < ApplicationController
         rateCount
       end
     elsif @text.downcase.include? "pk"
+      @pkuser.user_status = "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
       @users = User.order("overall_rating DESC").limit(10)
-      render "rankbak", :formats => :xml
+      render "rank", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
     elsif @text == "退出"
       render "exit", :formats => :xml
     elsif @text == "保存"
+      @pkuser.user_status = "normal"
       render "voicereply", :formats => :xml
     elsif @text == "笑话"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
@@ -64,13 +66,13 @@ class WeixinsController < ApplicationController
       getRate
       @pkuser.rate_at = @rate.rateid
       @pkuser.rate_count = 1
-      @pkuser.save
       render "rate", :formats => :xml
     elsif @text.include? " "
       text_command
     else
       render "help", :formats => :xml
-    end 
+    end
+    @pkuser.save
   end
   
   private

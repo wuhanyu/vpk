@@ -12,25 +12,21 @@
 		<![CDATA[news]]>
 	</MsgType>
 	<ArticleCount>
-		10
+		1
 	</ArticleCount>
 	<Articles>
-		<% count = 0%>
-		<% @users.each do |user| %>
-		<% count = count + 1%>
 			<item>
-				<Title><![CDATA[No.<%= count %> <%= user.name %> (<%= user.overall_rating%> 分)]]></Title>
+				<Title><![CDATA[No.1 <%= @user.name %> (<%= @user.overall_rating%> 分)]]></Title>
 				<Description>
-					<![CDATA[Top <%= count %>]]>
+					<![CDATA[]]>
 				</Description>
 				<PicUrl>
-					<![CDATA[<%= user.avatar_url %>]]>
+					<![CDATA[<%= @user.avatar_url %>]]>
 				</PicUrl>
 				<Url>
-					<![CDATA[http://124.16.139.178/users/<%= user.uid %>]]>
+					<![CDATA[http://124.16.139.178/users/<%= @user.uid %>]]>
 				</Url>
 			</item>
-		<% end %>
 	</Articles>
 	<FuncFlag>
 		0
