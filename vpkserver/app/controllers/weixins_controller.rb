@@ -44,6 +44,15 @@ class WeixinsController < ApplicationController
     if @text == "随便听"
       @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       render "randomplay", :formats => :xml
+    elsif @text == "随便萌"
+      @randommengs = Rec.where(:uid => @user.meng)
+      if @randommengs.count > 0
+        @randommeng = Webrc.limit(1).offset(rand(Webrc.count)).first
+        render "randomplay", :formats => :xml
+      else
+        @texttext = "您现在还没有可听的萌声音哦，萌别人试试"
+        render "texttext", :formats => :xml
+      end
     elsif (@text.downcase == "a" || @text.downcase == "b" || @text.downcase == "p")
       @rs = @text.downcase
       checkRate

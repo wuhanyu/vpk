@@ -1,0 +1,30 @@
+<xml>
+	<ToUserName>
+		<![CDATA[<%= params[:xml][:FromUserName] %>]]>
+	</ToUserName>
+	<FromUserName>
+		<![CDATA[<%= params[:xml][:ToUserName] %>]]>
+	</FromUserName>
+	<CreateTime>
+		<%= Time.now.to_i %>
+	</CreateTime>
+	<MsgType>
+		<![CDATA[music]]>
+	</MsgType>
+	<Music>
+		<Title><![CDATA[<%= @randommeng.title %>]]></Title>
+		<Description>
+			<![CDATA[回复【随便听】或【随便萌】继续听～回复【PK】发属于自己的声音～
+喜欢这段声音就把它转发给你的好友吧~]]>
+		</Description>
+		<MusicUrl>
+			<![CDATA[<%= @randommeng.url %>]]>
+		</MusicUrl>
+		<HQMusicUrl>
+			<![CDATA[<%= @randommeng.url %>]]>
+		</HQMusicUrl>
+	</Music>
+	<FuncFlag>
+		0
+	</FuncFlag>
+</xml>
