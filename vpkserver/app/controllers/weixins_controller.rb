@@ -125,18 +125,24 @@ class WeixinsController < ApplicationController
       @text = params[:xml][:Content]
       if (@text.include? " ")
         @name = @text.split(" ")[0]
-        @sex = @text.split(" ")[1]
-        if (@sex=="男" or @sex=="女")
-          @pkuser.name = @name
-          @pkuser.sex = 0
-          if @sex=="女"
-            @pkuser.sex = 1
+        @tmpuser = Pkuser.where(:name => @name).first
+        if @tmpuser == nil
+          @sex = @text.split(" ")[1]
+          if (@sex=="男" or @sex=="女")
+            @pkuser.name = @name
+            @pkuser.sex = 0
+            if @sex=="女"
+              @pkuser.sex = 1
+            end
+            @pkuser.save
+            render "after", :formats => :xml
+          else
+            @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
+            render "texttext", :formats => :xml
           end
-          @pkuser.save
-          render "after", :formats => :xml
         else
-          @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
-          render "texttext", :formats => :xml
+          @texttext = "昵称已经被占用，请输入新的昵称，范例格式：麦萌 女"
+          render "texttext", :formats => :xml         
         end
       else
         render "newuser", :formats => :xml
