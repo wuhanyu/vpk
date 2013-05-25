@@ -131,8 +131,14 @@ class WeixinsController < ApplicationController
       :meng => [],
       :menged_count => 0,
       :rank => 0,
+      :name => "Silent",
       :overall_rating => 0)
-      @user.save
+      if @user.save
+        puts @user
+      else
+        @errortext = @user.errors
+        render "errortext", :formats => :xml
+      end
     end
   end
   
@@ -153,8 +159,12 @@ class WeixinsController < ApplicationController
             if @sex=="女"
               @user.sex = 1
             end
-            @user.save
-            render "after", :formats => :xml
+            if @user.save
+              render "after", :formats => :xml
+            else
+              @errortext = @user.errors
+              render "errortext", :formats => :xml
+            end
           else
             @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
             render "texttext", :formats => :xml

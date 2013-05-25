@@ -13,4 +13,5 @@ class User
   key :meng, Array
   key :menged_count, Integer
   key :rank, Integer
+  key :overall_rating, Integer
 end
