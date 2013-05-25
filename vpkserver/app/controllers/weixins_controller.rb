@@ -148,22 +148,27 @@ class WeixinsController < ApplicationController
         @name = @text.split(" ")[0]
         @tmpuser = User.where(:name => @name).first
         if (@tmpuser == nil and @text != "麦萌" and @text != "Silent")
-          @sex = @text.split(" ")[1]
-          if (@sex=="男" or @sex=="女")
-            @user.name = @name
-            @user.sex = 0
-            if @sex=="女"
-              @user.sex = 1
-            end
-            if @user.save
-              render "after", :formats => :xml
+          if @name.length <= 5
+            @sex = @text.split(" ")[1]
+            if (@sex=="男" or @sex=="女")
+              @user.name = @name
+              @user.sex = 0
+              if @sex=="女"
+                @user.sex = 1
+              end
+              if @user.save
+                render "after", :formats => :xml
+              else
+                @errortext = @user.errors
+                render "errortext", :formats => :xml
+              end
             else
-              @errortext = @user.errors
-              render "errortext", :formats => :xml
+              @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
+              render "texttext", :formats => :xml
             end
           else
-            @texttext = "性别请填『男』或『女』，范例格式：麦萌 女"
-            render "texttext", :formats => :xml
+            @texttext = "昵称长度不能超过5字符，请输入新的昵称，范例格式：麦萌 女"
+            render "texttext", :formats => :xml            
           end
         else
           @texttext = "昵称已经被占用，请输入新的昵称，范例格式：麦萌 女"
