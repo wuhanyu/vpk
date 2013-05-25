@@ -51,7 +51,7 @@ class WeixinsController < ApplicationController
         @tuser = User.where(:uid=>@randommeng.uid).first
         render "randommeng", :formats => :xml
       else
-        @texttext = "您现在还没有可听的萌声音哦，萌别人试试"
+        @texttext = "您现在还没有可听的萌声音哦，回复【萌 昵称】萌别人试试~"
         render "texttext", :formats => :xml
       end
     elsif (@text.downcase == "a" || @text.downcase == "b" || @text.downcase == "p")
@@ -79,6 +79,9 @@ class WeixinsController < ApplicationController
     elsif @text == "笑话"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
       render "sample", :formats => :xml
+    elsif @text == "调戏"
+      @texttext = "坏人你调戏我，告诉麻麻听～呜呜跑开"
+      render "texttext", :formats => :xml
     elsif @text == "台词"
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
       render "sample", :formats => :xml
