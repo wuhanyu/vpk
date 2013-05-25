@@ -70,6 +70,8 @@ class WeixinsController < ApplicationController
       render "rank", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
+    elsif @text == "test"
+      render "test", :formats => :xml
     elsif @text == "保存"
       @user.user_status = "normal"
       render "voicereply", :formats => :xml
