@@ -12,7 +12,7 @@
 		<![CDATA[news]]>
 	</MsgType>
 	<ArticleCount>
-		<%= @users.count %>
+		<%= [@users.count, 10].min %>
 	</ArticleCount>
 	<Articles>
 		<% count = 0%>
