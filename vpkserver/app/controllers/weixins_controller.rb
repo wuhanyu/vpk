@@ -206,7 +206,12 @@ class WeixinsController < ApplicationController
   private
   #give rate
   def getRate
-    @rate = Rate.limit(1).offset(rand(Rate.count)).first
+    @ccount = Rate.count(:rated_count => 0)
+    if @ccount > 0
+      @rate = Rate.where(:rated_count => 0).offset(rand(@ccount)).first
+    else
+      @rate = Rate.limit(1).offset(rand(Rate.count)).first
+    end
   end
   
   private
@@ -257,14 +262,14 @@ class WeixinsController < ApplicationController
     if (@rs == "a")
       @match.result = 1
       @rate.wincount_a = @rate.wincount_a + 1
-      @rate.save 
     elsif (@rs == "b")
       @match.result = -1
       @rate.wincount_b = @rate.wincount_b + 1
-      @rate.save 
     else
       @match.result = 0
     end
+    @rate.rated_count = @rate.rated_count + 1
+    @rate.save 
     @match.save
   end
 end
