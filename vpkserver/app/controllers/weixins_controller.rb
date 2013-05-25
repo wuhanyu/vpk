@@ -123,14 +123,12 @@ class WeixinsController < ApplicationController
       @user.last_active_at = Time.now
       @user.save
     else
-      user_count = User.count
       @user = User.new(:openid => params[:xml][:FromUserName],
       :created_at => Time.now,
       :last_active_at => Time.now,
       :meng => [],
       :menged_count => 0,
       :rank => 0,
-      :name => "Silent",
       :overall_rating => 0)
       @user.save
     end
@@ -139,7 +137,7 @@ class WeixinsController < ApplicationController
   private
   #create user
   def checkNewUser
-    if @user.name == "Silent"
+    if (@user.name == nil or @user.name == "Silent")
       @flag = false
       @text = params[:xml][:Content]
       if (@text.include? " ")
@@ -231,7 +229,7 @@ class WeixinsController < ApplicationController
         end
       end
     else
-      render "errorreply", :formats => :xml
+      render "errorcmd", :formats => :xml
     end
   end
   
