@@ -8,6 +8,23 @@ class RecsController < ApplicationController
       format.json { render json: @recs }
     end
   end
+  
+  def update
+    @rec = Rec.find(params[:id])
+    @rec.update_attributes(params[:rec])
+    @rates = Rate.where(:rid_a=>@rec.rid)
+    @rates.each do |rate|
+      rate.destroy
+    end
+    @rates = Rate.where(:rid_b=>@rec.rid)
+    @rates.each do |rate|
+      rate.destroy
+    end
+    respond_to do |format|
+      format.html { redirect_to recs_url }
+      format.json { head :no_content }
+    end
+  end
 
   def destroy
     @rec = Rec.find(params[:id])

@@ -16,7 +16,7 @@
     <% if sample.type == 1 %>
     <% 	@type = "笑话" %>
     <% else %>
-    <% 	@type = "段子" %>
+    <% 	@type = "台词" %>
     <% end %>
     <td style="text-align:center"><%= sample.type %> (<%= @type %>)</td>
     <td style="text-align:center"><%= link_to '编辑', edit_sample_path(sample) %></td>
