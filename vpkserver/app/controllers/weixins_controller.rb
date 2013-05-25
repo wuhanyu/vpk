@@ -47,8 +47,10 @@ class WeixinsController < ApplicationController
     elsif @text == "随便萌"
       @randommengs = Rec.where(:uid => @user.meng)
       if @randommengs.count > 0
-        @randommeng = Webrc.limit(1).offset(rand(Webrc.count)).first
-        render "randomplay", :formats => :xml
+        @ccount = rand(@randommengs.count)
+        @randommeng = @randommengs.limit(1).offset(@ccount).first
+        @tuser = User.where(:uid=>@randommeng.uid).first
+        render "randommeng", :formats => :xml
       else
         @texttext = "您现在还没有可听的萌声音哦，萌别人试试"
         render "texttext", :formats => :xml
@@ -127,7 +129,9 @@ class WeixinsController < ApplicationController
       :last_active_at => Time.now,
       :meng => [],
       :menged_count => 0,
-      :rank => 0)
+      :rank => 0,
+      :name => "Silent",
+      :overall_rating => 0)
       @user.save
     end
   end
@@ -135,13 +139,13 @@ class WeixinsController < ApplicationController
   private
   #create user
   def checkNewUser
-    if @user.name == nil
+    if @user.name == "Silent"
       @flag = false
       @text = params[:xml][:Content]
       if (@text.include? " ")
         @name = @text.split(" ")[0]
         @tmpuser = User.where(:name => @name).first
-        if (@tmpuser == nil and @text != "麦萌")
+        if (@tmpuser == nil and @text != "麦萌" and @text != "Silent")
           @sex = @text.split(" ")[1]
           if (@sex=="男" or @sex=="女")
             @user.name = @name

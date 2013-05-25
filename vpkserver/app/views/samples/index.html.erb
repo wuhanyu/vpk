@@ -1,25 +1,30 @@
 <h1>Listing samples</h1>
-
-<table>
+<%= link_to '新段子/台词', new_sample_path %>
+<br>
+<br>
+<table border="1" cellpadding="1" cellspacing="1">
   <tr>
-    <th>Content</th>
-    <th>Type</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th width="500px">Content</th>
+    <th width="100px">Type</th>
+    <th width="40px"></th>
+    <th width="40px"></th>
   </tr>
 
 <% @samples.each do |sample| %>
   <tr>
-    <td><%= sample.content %></td>
-    <td><%= sample.type %></td>
-    <td><%= link_to 'Show', sample %></td>
-    <td><%= link_to 'Edit', edit_sample_path(sample) %></td>
-    <td><%= link_to 'Destroy', sample, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td style="max-width:500px;padding:5px"><%= sample.content %></td>
+    <% if sample.type == 1 %>
+    <% 	@type = "笑话" %>
+    <% else %>
+    <% 	@type = "段子" %>
+    <% end %>
+    <td style="text-align:center"><%= sample.type %> (<%= @type %>)</td>
+    <td style="text-align:center"><%= link_to '编辑', edit_sample_path(sample) %></td>
+    <td style="text-align:center"><%= link_to '删除', sample, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Sample', new_sample_path %>
+

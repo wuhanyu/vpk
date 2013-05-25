@@ -2,14 +2,17 @@
 
 <table>
   <tr>
-    <th>用户</th>
-    <th>声音</th>
+    <th width="200px" >用户</th>
+    <th width="50px" >萌粉数</th>
+    <th width="30px">声音</th>
     <th></th>
   </tr>
 
 <% @recs.each do |rec| %>
   <tr>
-    <td><%= rec.uid %></td>
+  	<% @user = User.where(:uid=>rec.uid).first %>
+    <td style="text-align:center"><%= @user.name %></td>
+    <td style="text-align:center"><%= @user.menged_count %></td>
     <td><a href="<%= rec.rec_url %>">点我</a></td>
 	<td><%= link_to '删除', rec, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>

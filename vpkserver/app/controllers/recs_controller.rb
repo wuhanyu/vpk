@@ -3,7 +3,6 @@ class RecsController < ApplicationController
 
   def index
     @recs = Rec.where(:deleted => nil)
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @recs }
