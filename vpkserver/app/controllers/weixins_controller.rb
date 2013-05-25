@@ -33,7 +33,6 @@ class WeixinsController < ApplicationController
         render "errorreply", :formats => :xml
       end
     end
-    
     recordlog
   end
   
@@ -123,7 +122,6 @@ class WeixinsController < ApplicationController
     @user = User.where(:openid => params[:xml][:FromUserName]).first
     if @user != nil
       @user.last_active_at = Time.now
-      @user.save
     else
       @user = User.new(:openid => params[:xml][:FromUserName],
       :created_at => Time.now,
@@ -131,15 +129,10 @@ class WeixinsController < ApplicationController
       :meng => [],
       :menged_count => 0,
       :rank => 0,
-      :name => "Silent",
-      :overall_rating => 0)
-      if @user.save
-        puts @user
-      else
-        @errortext = @user.errors
-        render "errortext", :formats => :xml
-      end
+      :overall_rating => 0,
+      :name => "Silent")
     end
+    @user.save
   end
   
   private

@@ -3,6 +3,6 @@
     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
     <CreateTime><%= Time.now.to_i %></CreateTime>
     <MsgType><![CDATA[text]]></MsgType>
-    <Content><![CDATA[<%= @errertext%>]]></Content>
+    <Content><![CDATA[<%= @errortext %>]]></Content>
     <FuncFlag>0</FuncFlag>
 </xml>
