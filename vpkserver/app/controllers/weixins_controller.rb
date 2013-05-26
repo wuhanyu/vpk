@@ -65,7 +65,7 @@ class WeixinsController < ApplicationController
       @user.user_status = "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
-      @users = User.order("overall_rating DESC").limit(10)
+      @users = User.where(:overall_rating.gt => 0).order("overall_rating DESC").limit(10)
       render "rank", :formats => :xml
     elsif @text == "帮助"
       render "help", :formats => :xml
@@ -131,8 +131,6 @@ class WeixinsController < ApplicationController
       :last_active_at => Time.now,
       :meng => [],
       :menged_count => 0,
-      :rank => 0,
-      :overall_rating => 0,
       :name => "Silent")
     end
     @user.save
