@@ -19,9 +19,9 @@
 		<% @users.each do |user| %>
 		<% count = count + 1%>
 			<item>
-				<Title><![CDATA[No.<%= count %> <%= user.name %>]]></Title>
+				<Title><![CDATA[No.<%= count %> <%= user.name %> (<%= user.menged_count %>位萌粉)]]></Title>
 				<Description>
-					<![CDATA[有<%= user.menged_count %>位萌粉]]>
+					<![CDATA[]]>
 				</Description>
 				<PicUrl>
 					<![CDATA[<%= user.avatar_url %>]]>

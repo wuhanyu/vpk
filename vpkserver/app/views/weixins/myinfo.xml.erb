@@ -21,7 +21,11 @@
 					<![CDATA[]]>
 				</Description>
 				<PicUrl>
-					<![CDATA[<%= @user.avatar_url %>]]>
+					<% @url = @user.avatar_url%>
+					<% if @user.avatar_url_L != nil %>
+					<%   @url = @user.avatar_url_L%>
+					<% end %>
+					<![CDATA[<%= @url %>]]>
 				</PicUrl>
 				<Url>
 					<![CDATA[http://124.16.139.178/users/<%= @user.uid %>]]>

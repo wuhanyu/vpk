@@ -10,7 +10,7 @@
     <th></th>
   </tr>
 
-<% @recs.each do |rec| %>
+<% @recs.reverse_each do |rec| %>
   <tr>
   	<% @user = User.where(:uid=>rec.uid).first %>
     <td style="text-align:center"><%= @user.name %></td>

@@ -10,7 +10,7 @@
     <th width="40px"></th>
   </tr>
 
-<% @samples.each do |sample| %>
+<% @samples.reverse_each do |sample| %>
   <tr>
     <td style="max-width:500px;padding:5px"><%= sample.content %></td>
     <% if sample.type == 1 %>
