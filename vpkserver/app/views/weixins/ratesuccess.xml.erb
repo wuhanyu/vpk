@@ -1,0 +1,14 @@
+<xml>
+    <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+    <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+    <CreateTime><%= Time.now.to_i %></CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[您已经成功支持了『<%= @tuser.name %>』
+喜欢『<%= @tuser.name %>』就回【萌 <%= @tuser.name %>】
+回复【听】继续打分~
+回复【PK】上传自己的声音
+回复【排行榜】查看萌友排行榜~/::$
+累了就回复【随便听】或【随便萌】休息一下~
+]]></Content>
+    <FuncFlag>0</FuncFlag>
+</xml>

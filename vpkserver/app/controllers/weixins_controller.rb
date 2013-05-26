@@ -21,6 +21,7 @@ class WeixinsController < ApplicationController
         @user_status = "normal"
       elsif params[:xml][:MsgType] == "event"
         if params[:xml][:Event] == "subscribe"
+          @ccount = User.all.count
           render "welcome", :formats => :xml
         else
           render "errorreply", :formats => :xml
@@ -59,7 +60,7 @@ class WeixinsController < ApplicationController
       checkRate
       if @flag
         recordResult
-        rateCount
+        # rateCount
       end
     elsif @text.downcase.include? "pk"
       @user.user_status = "pk"
@@ -87,7 +88,7 @@ class WeixinsController < ApplicationController
       render "sample", :formats => :xml
     elsif @text == "清唱"
       render "onlyvoice", :formats => :xml
-    elsif @text.include? "听"
+    elsif (@text == "听" or @text.downcase == "t")
       @user.user_status = "rate"
       getRate
       @user.rate_at = @rate.rateid
@@ -209,12 +210,13 @@ class WeixinsController < ApplicationController
   private
   #give rate
   def getRate
-    @ccount = Rate.count(:rated_count => 0)
-    if @ccount > 0
-      @rate = Rate.where(:rated_count => 0).offset(rand(@ccount)).first
-    else
-      @rate = Rate.limit(1).offset(rand(Rate.count)).first
-    end
+    # @ccount = Rate.count(:rated_count => 0)
+    # if @ccount > 0
+      # @rate = Rate.where(:rated_count => 0).offset(rand(@ccount)).first
+    # else
+      # @rate = Rate.limit(1).offset(rand(Rate.count)).first
+    # end
+    @rate = Rate.limit(1).offset(rand(Rate.count)).first
   end
   
   private
@@ -266,10 +268,12 @@ class WeixinsController < ApplicationController
       @match.result = 1
       @rate.wincount_a = @rate.wincount_a + 1
       @rec = Rec.where(:rid=>@rate.rid_a).first
+      @uid = @rate.uid_a
     elsif (@rs == "b")
       @match.result = -1
       @rate.wincount_b = @rate.wincount_b + 1
       @rec = Rec.where(:rid=>@rate.rid_b).first
+      @uid = @rate.uid_b
     else
       @match.result = 0
     end
@@ -282,5 +286,7 @@ class WeixinsController < ApplicationController
       @rec.win_count = @rec.win_count + 1
     end
     @rec.save
+    @tuser = User.where(:uid=>@uid).first
+    render "ratesuccess", :formats => :xml
   end
 end
