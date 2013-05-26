@@ -267,14 +267,22 @@ class WeixinsController < ApplicationController
     if (@rs == "a")
       @match.result = 1
       @rate.wincount_a = @rate.wincount_a + 1
+      @rec = Rec.where(:rid=>@rate.rid_a).first
     elsif (@rs == "b")
       @match.result = -1
       @rate.wincount_b = @rate.wincount_b + 1
+      @rec = Rec.where(:rid=>@rate.rid_b).first
     else
       @match.result = 0
     end
     @rate.rated_count = @rate.rated_count + 1
     @rate.save 
     @match.save
+    if (@rec.win_count == nil)
+      @rec.win_count = 1
+    else
+      @rec.win_count = @rec.win_count + 1
+    end
+    @rec.save
   end
 end
