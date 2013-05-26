@@ -25,7 +25,7 @@
 				</Description>
 				<PicUrl>
 					<% @url = user.avatar_url%>
-					<% if (@user.avatar_url_L != nil and count == 1)%>
+					<% if ((not user.avatar_url_L.nil?) and count == 1)%>
 					<%   @url = user.avatar_url_L%>
 					<% end %>
 					<![CDATA[<%= @url %>]]>
