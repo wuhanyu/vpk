@@ -91,7 +91,7 @@ class WeixinsController < ApplicationController
     elsif (@text == "听" or @text.downcase == "t")
       @user.user_status = "rate"
       getRate
-      @user.rate_at = @rate.rateid
+      @user.rate_at = @rate._id
       @user.rate_count = 1
       render "rate", :formats => :xml
     elsif @text.include? " "
@@ -254,7 +254,7 @@ class WeixinsController < ApplicationController
   private
   #record result
   def recordResult
-    @rate = Rate.where(:rateid => @user.rate_at).first
+    @rate = Rate.where(:_id => @user.rate_at).first
     @match = Newmatch.new()
     @match.uid_a = @rate.uid_a
     @match.uid_b = @rate.uid_b

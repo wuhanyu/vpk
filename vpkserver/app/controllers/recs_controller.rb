@@ -11,7 +11,9 @@ class RecsController < ApplicationController
   
   def update
     @rec = Rec.find(params[:id])
+    @old_category = @rec.category
     @rec.update_attributes(params[:rec])
+    @new_category = @rec.category
     @rates = Rate.where(:rid_a=>@rec.rid)
     @rates.each do |rate|
       rate.destroy
@@ -20,6 +22,14 @@ class RecsController < ApplicationController
     @rates.each do |rate|
       rate.destroy
     end
+    @user = User.where(:uid => @rec.uid).first
+    @user.recs[@old_category].delete(@rec.rid)
+    if @user.recs[@new_category] == nil
+      @user.recs[@new_category] = {}
+    end
+    @user.recs[@new_category][@rec.rid] = true
+    
+    @user.save
     respond_to do |format|
       format.html { redirect_to recs_url }
       format.json { head :no_content }
