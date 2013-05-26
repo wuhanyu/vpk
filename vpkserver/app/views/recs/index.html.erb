@@ -2,6 +2,7 @@
 
 <table>
   <tr>
+  	<th width="50px" >rid</th>
     <th width="200px" >用户</th>
     <th width="50px" >萌粉数</th>
     <th width="30px">声音</th>
@@ -13,6 +14,7 @@
 <% @recs.reverse_each do |rec| %>
   <tr>
   	<% @user = User.where(:uid=>rec.uid).first %>
+  	<td style="text-align:center"><%= rec.rid %></td>
     <td style="text-align:center"><%= @user.name %></td>
     <td style="text-align:center"><%= @user.menged_count %></td>
     <td><a href="<%= rec.rec_url %>">点我</a></td>

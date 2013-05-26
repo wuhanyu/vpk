@@ -145,7 +145,7 @@ class WeixinsController < ApplicationController
       if (@text.include? " ")
         @name = @text.split(" ")[0]
         @tmpuser = User.where(:name => @name).first
-        if (@tmpuser == nil and @text != "麦萌" and @text != "Silent")
+        if (@tmpuser == nil and @name != "麦萌" and @name != "Silent")
           if @name.length <= 5
             @sex = @text.split(" ")[1]
             if (@sex=="男" or @sex=="女")
