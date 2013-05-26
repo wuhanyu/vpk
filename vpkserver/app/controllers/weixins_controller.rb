@@ -210,13 +210,13 @@ class WeixinsController < ApplicationController
   private
   #give rate
   def getRate
-    # @ccount = Rate.count(:rated_count => 0)
-    # if @ccount > 0
-      # @rate = Rate.where(:rated_count => 0).offset(rand(@ccount)).first
-    # else
-      # @rate = Rate.limit(1).offset(rand(Rate.count)).first
-    # end
-    @rate = Rate.limit(1).offset(rand(Rate.count)).first
+    @ccount = Rate.count(:rated_count => 0)
+    if @ccount > 0
+      @rate = Rate.where(:rated_count => 0).offset(rand(@ccount)).first
+    else
+      @rate = Rate.limit(1).offset(rand(Rate.count)).first
+    end
+    # @rate = Rate.limit(1).offset(rand(Rate.count)).first
   end
   
   private
@@ -277,8 +277,6 @@ class WeixinsController < ApplicationController
     else
       @match.result = 0
     end
-    @rate.rated_count = @rate.rated_count + 1
-    @rate.save 
     @match.save
     if (@rec.win_count == nil)
       @rec.win_count = 1
@@ -287,6 +285,28 @@ class WeixinsController < ApplicationController
     end
     @rec.save
     @tuser = User.where(:uid=>@uid).first
+    ###############################
+    if (@rate.rated_count == 0)
+      Rate.where(:uid_a=>@rate.uid_a).each do |rate|
+        rate.rated_count = rate.rated_count + 1
+        rate.save
+      end
+      Rate.where(:uid_b=>@rate.uid_a).each do |rate|
+        rate.rated_count = rate.rated_count + 1
+        rate.save
+      end
+      Rate.where(:uid_a=>@rate.uid_b).each do |rate|
+        rate.rated_count = rate.rated_count + 1
+        rate.save
+      end
+      Rate.where(:uid_b=>@rate.uid_b).each do |rate|
+        rate.rated_count = rate.rated_count + 1
+        rate.save
+      end
+    end
+    @rate.rated_count = @rate.rated_count + 1
+    @rate.save 
+    ###############################
     render "ratesuccess", :formats => :xml
   end
 end
