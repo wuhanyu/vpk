@@ -42,19 +42,25 @@ class WeixinsController < ApplicationController
   def react
     @text = params[:xml][:Content]
     if @text == "随便听"
-      @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
-      render "randomplay", :formats => :xml
+      # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
+      # render "randomplay", :formats => :xml
+      @logs = Log.where(:type => "voice", :MediaId.exists => true)
+      @mediaid = @logs.limit(1).offset(rand(@logs.count)).first.MediaId
+      render "randommeng2", :formats => :xml
     elsif @text == "随便萌"
-      @randommengs = Rec.where(:uid => @user.meng)
-      if @randommengs.count > 0
-        @ccount = rand(@randommengs.count)
-        @randommeng = @randommengs.limit(1).offset(@ccount).first
-        @tuser = User.where(:uid=>@randommeng.uid).first
-        render "randommeng", :formats => :xml
-      else
-        @texttext = "您现在还没有可听的萌声音哦，回复【萌 昵称】萌别人试试~"
-        render "texttext", :formats => :xml
-      end
+      @logs = Log.where(:type => "voice", :MediaId.exists => true)
+      @mediaid = @logs.limit(1).offset(rand(@logs.count)).first.MediaId
+      render "randommeng2", :formats => :xml
+      # @randommengs = Rec.where(:uid => @user.meng)
+      # if @randommengs.count > 0
+        # @ccount = rand(@randommengs.count)
+        # @randommeng = @randommengs.limit(1).offset(@ccount).first
+        # @tuser = User.where(:uid=>@randommeng.uid).first
+        # render "randommeng", :formats => :xml
+      # else
+        # @texttext = "您现在还没有可听的萌声音哦，回复【萌 昵称】萌别人试试~"
+        # render "texttext", :formats => :xml
+      # end
     elsif (@text.downcase == "a" || @text.downcase == "b" || @text.downcase == "p")
       @rs = @text.downcase
       checkRate
@@ -113,9 +119,11 @@ class WeixinsController < ApplicationController
   # log
   def recordlog
     @log = Log.new(:content=> params[:xml][:Content],
-    :type=> params[:xml][:MsgType],
-    :time=> Time.at(params[:xml][:CreateTime].to_i),
-    :fromUser=> params[:xml][:FromUserName],
+    :type => params[:xml][:MsgType],
+    :time => Time.at(params[:xml][:CreateTime].to_i),
+    :fromUser => params[:xml][:FromUserName],
+    :MediaId => params[:xml][:MediaId],
+    :CreateTime => params[:xml][:CreateTime]
     )
     @log.save
   end

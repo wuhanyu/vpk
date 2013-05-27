@@ -4,5 +4,6 @@ class Log
   key :content, String
   key :type, String
   key :time, Time
-
+  key :MediaId, String
+  key :CreateTime, String
 end
