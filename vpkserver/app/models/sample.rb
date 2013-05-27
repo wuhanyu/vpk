@@ -3,5 +3,5 @@ class Sample
 
   key :content, String
   key :type, Integer
-
+  key :created_at, Time
 end

@@ -66,6 +66,7 @@ class WeixinsController < ApplicationController
       checkRate
       if @flag
         recordResult
+        @user.user_status = "normal"
         # rateCount
       end
     elsif (@text.downcase == "pk" or @text == "说")
@@ -91,6 +92,9 @@ class WeixinsController < ApplicationController
       render "texttext", :formats => :xml
     elsif @text == "台词"
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
+      render "sample", :formats => :xml
+    elsif @text == "三行情诗"
+      @sampletext = Sample.where(:type => 5).limit(1).offset(rand(Sample.where(:type => 5).count)).first.content
       render "sample", :formats => :xml
     elsif @text == "清唱"
       render "onlyvoice", :formats => :xml

@@ -2,7 +2,7 @@ class SamplesController < ApplicationController
   # GET /samples
   # GET /samples.json
   def index
-    @samples = Sample.all
+    @samples = Sample.order("created_at ASC")
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,7 +41,7 @@ class SamplesController < ApplicationController
   # POST /samples.json
   def create
     @sample = Sample.new(params[:sample])
-
+    @sample.created_at = Time.now
     respond_to do |format|
       if @sample.save
         format.html { redirect_to new_sample_path, notice: 'Sample was successfully created.' }
