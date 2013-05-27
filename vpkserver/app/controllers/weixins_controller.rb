@@ -62,7 +62,7 @@ class WeixinsController < ApplicationController
         recordResult
         # rateCount
       end
-    elsif @text.downcase.include? "pk"
+    elsif (@text.downcase == "pk" or @text == "说")
       @user.user_status = "pk"
       render "pk", :formats => :xml
     elsif @text == "排行榜"
