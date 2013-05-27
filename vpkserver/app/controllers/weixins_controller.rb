@@ -93,11 +93,17 @@ class WeixinsController < ApplicationController
     elsif @text == "台词"
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
       render "sample", :formats => :xml
-    elsif @text == "三行情诗"
+    elsif @text == "三行情书"
       @sampletext = Sample.where(:type => 5).limit(1).offset(rand(Sample.where(:type => 5).count)).first.content
-      render "sample", :formats => :xml
-    elsif @text == "清唱"
+      render "sample2", :formats => :xml
+    elsif @text == "清唱" or @text == "唱给你听"
       render "onlyvoice", :formats => :xml
+    elsif @text == "梦想"
+      @texttext = "畅想未来的自己，大胆勇敢地说出你的梦想！" 
+      render "texttext", :formats => :xml
+    elsif @text == "正毕业"
+      @texttext = "临别之际，思绪万千，发表毕业感言吧..." 
+      render "texttext", :formats => :xml        
     elsif (@text == "听" or @text.downcase == "t")
       @user.user_status = "rate"
       getRate
