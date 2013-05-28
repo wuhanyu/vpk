@@ -20,10 +20,11 @@
 		<% 	if @tmpuser.rank == 10 and @user.rank > 10 %>
 		<% 	  @tmpuser = @user %>
 		<% 	end %>
+		<% @tmpuser.rec_count = Rec.where(:uid=>@tmpuser.uid).count%>
+		<% @tmpuser.save %>
 			<item>
 				<Title><![CDATA[No.<%= @tmpuser.rank %> <%= @tmpuser.name %> (<%= @tmpuser.menged_count %>位萌粉)
-<%= @tmpuser.overall_rating %>分
-]]></Title>
+有<%= @tmpuser.rec_count %>段录音 (<%= @tmpuser.overall_rating %>分)]]></Title>
 				<Description>
 					<![CDATA[]]>
 				</Description>
