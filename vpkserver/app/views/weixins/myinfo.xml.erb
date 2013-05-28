@@ -12,7 +12,7 @@
 		<![CDATA[news]]>
 	</MsgType>
 	<ArticleCount>
-		2
+		3
 	</ArticleCount>
 	<Articles>
 			<item>
@@ -32,12 +32,25 @@
 				</Url>
 			</item>
 			<item>
-				<Title><![CDATA[目前排名第<%= @user.rank %>位，有<%= @user.menged_count %>位萌友萌过你哦~]]></Title>
+				<Title><![CDATA[目前排名第<%= @user.rank %>位
+有<%= @user.menged_count %>位萌友萌过你哦~]]></Title>
 				<Description>
 					<![CDATA[]]>
 				</Description>
 				<PicUrl>
 					<![CDATA[<%= @user.avatar_url %>]]>
+				</PicUrl>
+				<Url>
+					<![CDATA[http://124.16.139.178/users/<%= @user.uid %>]]>
+				</Url>
+			</item>
+			<item>
+				<Title><![CDATA[您目前有<%= @user.rec_count %>段录音]]></Title>
+				<Description>
+					<![CDATA[]]>
+				</Description>
+				<PicUrl>
+					<![CDATA[http://124.16.139.178:8080/rc/voice3.png]]>
 				</PicUrl>
 				<Url>
 					<![CDATA[http://124.16.139.178/users/<%= @user.uid %>]]>
