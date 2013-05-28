@@ -133,7 +133,8 @@ class WeixinsController < ApplicationController
     :time => Time.at(params[:xml][:CreateTime].to_i),
     :fromUser => params[:xml][:FromUserName],
     :MediaId => params[:xml][:MediaId],
-    :CreateTime => params[:xml][:CreateTime]
+    :CreateTime => params[:xml][:CreateTime],
+    :event => params[:xml][:Event]
     )
     @log.save
   end

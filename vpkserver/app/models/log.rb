@@ -6,4 +6,5 @@ class Log
   key :time, Time
   key :MediaId, String
   key :CreateTime, String
+  key :event, String
 end

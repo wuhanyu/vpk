@@ -15,25 +15,27 @@
 		<%= [@users.count, 10].min %>
 	</ArticleCount>
 	<Articles>
-		<% count = 0%>
 		<% @users.each do |user| %>
-		<% count = count + 1%>
+		<% 	@tmpuser = user %>
+		<% 	if @tmpuser.rank == 10 and @user.rank > 10 %>
+		<% 	  @tmpuser = @user %>
+		<% 	end %>
 			<item>
-				<Title><![CDATA[No.<%= count %> <%= user.name %> (<%= user.menged_count %>位萌粉)
-<%= user.overall_rating %>分
+				<Title><![CDATA[No.<%= @tmpuser.rank %> <%= @tmpuser.name %> (<%= @tmpuser.menged_count %>位萌粉)
+<%= @tmpuser.overall_rating %>分
 ]]></Title>
 				<Description>
 					<![CDATA[]]>
 				</Description>
 				<PicUrl>
-					<% @url = user.avatar_url%>
-					<% if ((not user.avatar_url_L.nil?) and count == 1)%>
-					<%   @url = user.avatar_url_L%>
+					<% @url = @tmpuser.avatar_url%>
+					<% if ((not @tmpuser.avatar_url_L.nil?) and @tmpuser.rank == 1)%>
+					<%   @url = @tmpuser.avatar_url_L%>
 					<% end %>
 					<![CDATA[<%= @url %>]]>
 				</PicUrl>
 				<Url>
-					<![CDATA[http://124.16.139.178/users/<%= user.uid %>]]>
+					<![CDATA[http://124.16.139.178/users/<%= @tmpuser.uid %>]]>
 				</Url>
 			</item>
 		<% end %>
