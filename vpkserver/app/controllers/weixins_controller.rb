@@ -40,7 +40,7 @@ class WeixinsController < ApplicationController
   private
   # 根据文本消息进行状态变化
   def react
-    @text = params[:xml][:Content]
+    @text = params[:xml][:Content].strip
     if @text == "随便听"
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       # render "randomplay", :formats => :xml
@@ -83,7 +83,6 @@ class WeixinsController < ApplicationController
       @user.user_status = "normal"
       render "voicereply", :formats => :xml
     elsif @text == "我的信息" or @text == "我是谁"
-      
       render "myinfo", :formats => :xml
     elsif @text == "笑话"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
