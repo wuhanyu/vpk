@@ -3,6 +3,8 @@
     <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
     <CreateTime><%= Time.now.to_i %></CreateTime>
     <MsgType><![CDATA[text]]></MsgType>
-    <Content><![CDATA[萌翻了..你...是人类吗？~/::B你简直就是神一样的存在！回复【说】继续麦萌，回复【听】去听听其他人分享了什么有趣经历~]]></Content>
+    <Content><![CDATA[哈哈～麦萌收到了！<%= @user.name%>真棒！
+回复【说】继续麦萌，回复【听】去听听其他人分享了什么有趣经历~
+回复【我的信息】看看有多少人萌你了哦~]]></Content>
     <FuncFlag>0</FuncFlag>
 </xml>

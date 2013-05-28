@@ -1,12 +1,22 @@
 <xml>
-    <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
-    <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
-    <CreateTime><%= Time.now.to_i %></CreateTime>
-    <MsgType><![CDATA[text]]></MsgType>
-    <Content><![CDATA[Hi~偶是『麦萌』~
-欢迎来到充满魅力声音的『麦萌』世界，截止现在已经有<%= @ccount %>位萌友入驻咯~
-回复您的昵称+性别开始『麦萌』之旅吧~
-范例格式(中间是空格)：麦萌 女
-]]></Content>
-    <FuncFlag>0</FuncFlag>
+	<ToUserName>
+		<![CDATA[<%= params[:xml][:FromUserName] %>]]>
+	</ToUserName>
+	<FromUserName>
+		<![CDATA[<%= params[:xml][:ToUserName] %>]]>
+	</FromUserName>
+	<CreateTime>
+		<%= Time.now.to_i %>
+	</CreateTime>
+	<MsgType>
+		<![CDATA[voice]]>
+	</MsgType>
+	<Voice>
+		<MediaId>
+			<![CDATA[9KOjtx_AKU0cRY4a2zm-Uhtwwyw1ScjXqYubDaLVrJnERlwjJOq0VTByzKZ1tQjG]]>
+		</MediaId>
+	</Voice>
+	<FuncFlag>
+		0
+	</FuncFlag>
 </xml>
