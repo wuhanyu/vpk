@@ -44,12 +44,12 @@ class WeixinsController < ApplicationController
     if @text == "随便听"
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       # render "randomplay", :formats => :xml
-      @logs = Log.where(:type => "voice", :MediaId.exists => true)
-      @mediaid = @logs.limit(1).offset(rand(@logs.count)).first.MediaId
+      @recs = Rec.where(:MediaId.exists => true)
+      @mediaid = @recs.limit(1).offset(rand(@recs.count)).first.MediaId
       render "randommeng2", :formats => :xml
     elsif @text == "随便萌"
-      @logs = Log.where(:type => "voice", :MediaId.exists => true)
-      @mediaid = @logs.limit(1).offset(rand(@logs.count)).first.MediaId
+      @recs = Rec.where(:MediaId.exists => true)
+      @mediaid = @recs.limit(1).offset(rand(@recs.count)).first.MediaId
       render "randommeng2", :formats => :xml
       # @randommengs = Rec.where(:uid => @user.meng)
       # if @randommengs.count > 0
