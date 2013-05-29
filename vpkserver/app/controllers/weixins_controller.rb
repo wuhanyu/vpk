@@ -45,7 +45,15 @@ class WeixinsController < ApplicationController
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       # render "randomplay", :formats => :xml
       @recs = Rec.where(:MediaId.exists => true)
-      @mediaid = @recs.limit(1).offset(rand(@recs.count)).first.MediaId
+      @rec = @recs.limit(1).offset(rand(@recs.count)).first
+      @mediaid = @rec.MediaId
+      @tuser = User.where(:uid => @rec.uid).first
+      if (@tuserlistend_count.nil?)
+        @tuser.listened_count = 1
+      else
+        @tuser.listened_count = @tuser.listened_count + 1
+      end
+      @rec.save
       render "randommeng2", :formats => :xml
     elsif @text == "随便萌"
       @recs = Rec.where(:MediaId.exists => true)

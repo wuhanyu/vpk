@@ -15,4 +15,5 @@ class User
   key :rank, Integer
   key :overall_rating, Integer
   key :rec_count, Integer
+  key :listened_count, Integer
 end
