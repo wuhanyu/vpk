@@ -5,6 +5,7 @@
   	<th width="50px" >rid</th>
     <th width="200px" >用户</th>
     <th width="50px" >萌粉数</th>
+    <th width="100px" >MediaId</th>
     <th width="30px">声音</th>
     <th>1:笑话2:台词3:清唱4:其他</th>
     <th></th>
@@ -17,6 +18,7 @@
   	<td style="text-align:center"><%= rec.rid %></td>
     <td style="text-align:center"><%= @user.name %></td>
     <td style="text-align:center"><%= @user.menged_count %></td>
+    <td style="text-align:center"><%= rec.MediaId %></td>
     <td><a href="<%= rec.rec_url %>">点我</a></td>
     <%= form_for(rec) do |f| %>
 	    <td><%= f.text_field :category %></td>

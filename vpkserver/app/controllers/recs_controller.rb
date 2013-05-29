@@ -2,7 +2,7 @@ class RecsController < ApplicationController
   http_basic_authenticate_with :name=>"admin", :password=>"vpk", :except=>[:index]
 
   def index
-    @recs = Rec.where(:deleted.exists => false, :MediaId.exists => true).order("created_at")
+    @recs = Rec.where(:deleted.exists => false).order("created_at")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @recs }

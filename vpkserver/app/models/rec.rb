@@ -3,4 +3,5 @@ class Rec
   key :deleted, Boolean
   key :win_count, Integer
   key :play_count, Integer
+  key :MediaId, String
 end

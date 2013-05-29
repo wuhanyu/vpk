@@ -163,7 +163,7 @@ class WeixinsController < ApplicationController
     if @user.name == nil or @user.name == "Silent"
       @flag = false
       @text = params[:xml][:Content]
-      if (@text.include? " " and params[:xml][:MsgType] == "text" )
+      if (params[:xml][:MsgType] == "text" and @text.include? " ")
         @name = @text.split(" ")[0]
         @tmpuser = User.where(:name => @name).first
         if (@tmpuser == nil and @name != "麦萌" and @name != "Silent")
