@@ -160,10 +160,10 @@ class WeixinsController < ApplicationController
   private
   #create user
   def checkNewUser
-    if (@user.name == nil or @user.name == "Silent")
+    if @user.name == nil or @user.name == "Silent"
       @flag = false
       @text = params[:xml][:Content]
-      if (@text.include? " ")
+      if (@text.include? " " and params[:xml][:MsgType] == "text" )
         @name = @text.split(" ")[0]
         @tmpuser = User.where(:name => @name).first
         if (@tmpuser == nil and @name != "麦萌" and @name != "Silent")
