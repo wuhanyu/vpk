@@ -24,7 +24,7 @@
 		<% @tmpuser.save %>
 			<item>
 				<Title><![CDATA[No.<%= @tmpuser.rank %> <%= @tmpuser.name %> (<%= @tmpuser.menged_count %>位萌粉)
-有<%= @tmpuser.rec_count %>段录音 (<%= @tmpuser.overall_rating %>分)]]></Title>
+有<%= @tmpuser.rec_count %>段录音 (<%= @tmpuser.overall_rating %>分)<% if @tmpuser.rank > 10 %><%=  "    排名太低？加油多上传录音哦～" %><% end %>]]></Title>
 				<Description>
 					<![CDATA[]]>
 				</Description>
