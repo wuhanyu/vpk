@@ -44,7 +44,7 @@ class WeixinsController < ApplicationController
     if @text == "随便听"
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       # render "randomplay", :formats => :xml
-      @recs = Rec.where(:MediaId.exists => true)
+      @recs = Rec.where(:MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
       @rec = @recs.limit(1).offset(rand(@recs.count)).first
       @mediaid = @rec.MediaId
       @tuser = User.where(:uid => @rec.uid).first
@@ -56,7 +56,7 @@ class WeixinsController < ApplicationController
       @rec.save
       render "randommeng2", :formats => :xml
     elsif @text == "随便萌"
-      @recs = Rec.where(:MediaId.exists => true)
+      @recs = RRec.where(:MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
       @mediaid = @recs.limit(1).offset(rand(@recs.count)).first.MediaId
       render "randommeng2", :formats => :xml
       # @randommengs = Rec.where(:uid => @user.meng)
@@ -280,9 +280,9 @@ class WeixinsController < ApplicationController
         @texttext = "您要听的用户不存在哦，请检查用户名是否输入正确"
         render "texttext", :formats => :xml
       else
-        @recs = Rec.where(:uid => @tuser.uid, :MediaId.exists => true)
+        @recs = Rec.where(:uid => @tuser.uid, :MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
         if @recs.count == 0
-          @texttext = "这个人还没有上传录音哦~快让TA上传自己的声音吧~"
+          @texttext = "这个人最近没有上传录音哦~快让TA上传自己的声音吧~"
           render "texttext", :formats => :xml
         else
           @rec = @recs.limit(1).offset(rand(@recs.count)).first
