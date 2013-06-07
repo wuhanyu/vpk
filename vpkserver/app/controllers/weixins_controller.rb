@@ -53,6 +53,7 @@ class WeixinsController < ApplicationController
       else
         @tuser.listened_count = @tuser.listened_count + 1
       end
+      @tuser.save
       @rec.save
       render "randommeng2", :formats => :xml
     elsif @text == "随便萌"
@@ -107,10 +108,7 @@ class WeixinsController < ApplicationController
       render "sample2", :formats => :xml
     elsif @text == "清唱" or @text == "唱给你听"
       render "onlyvoice", :formats => :xml
-    elsif @text == "梦想"
-      @texttext = "畅想未来的自己，『按下录音键』大胆勇敢地说出你的梦想！" 
-      render "texttext", :formats => :xml
-    elsif @text == "正毕业"
+    elsif @text == "粽子节"
       @texttext = "临别之际，思绪万千，『按下录音键』发表毕业感言吧..." 
       render "texttext", :formats => :xml        
     elsif (@text == "听" or @text.downcase == "t")
