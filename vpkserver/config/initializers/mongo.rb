@@ -1,4 +1,4 @@
-MongoMapper.connection = Mongo::Connection.new('192.168.12.254', 27017)
+MongoMapper.connection = Mongo::Connection.new('124.16.139.143', 27017)
 MongoMapper.database = "vpk-#{Rails.env}"
 
 if defined?(PhusionPassenger)

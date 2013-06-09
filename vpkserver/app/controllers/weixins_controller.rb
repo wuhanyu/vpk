@@ -109,7 +109,7 @@ class WeixinsController < ApplicationController
     elsif @text == "清唱" or @text == "唱给你听"
       render "onlyvoice", :formats => :xml
     elsif @text == "粽子节"
-      @texttext = "临别之际，思绪万千，『按下录音键』发表毕业感言吧..." 
+      @texttext = "哟哟~准备好了咩？按下语音按钮开始录音咯，可以是粽子有关的段子、故事，想说啥说啥，唱两句更好啦:)。多多上传哦，麦萌君很期待ing~麦萌君会给优秀录音的上传者惊喜小礼物哈~" 
       render "texttext", :formats => :xml        
     elsif (@text == "听" or @text.downcase == "t")
       @user.user_status = "rate"
