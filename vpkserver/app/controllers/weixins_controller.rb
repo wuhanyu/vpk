@@ -278,14 +278,16 @@ class WeixinsController < ApplicationController
         @texttext = "您要听的用户不存在哦，请检查用户名是否输入正确"
         render "texttext", :formats => :xml
       else
-        @recs = Rec.where(:uid => @tuser.uid, :MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
+        #@recs = Rec.where(:uid => @tuser.uid, :MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
+        @recs = Rec.where(:uid => @tuser.uid)
         if @recs.count == 0
           @texttext = "这个人最近没有上传录音哦~快让TA上传自己的声音吧~"
           render "texttext", :formats => :xml
         else
           @rec = @recs.limit(1).offset(rand(@recs.count)).first
           @mediaid = @rec.MediaId
-          render "randommeng2", :formats => :xml
+          #render "randommeng2", :formats => :xml
+          render "listento", :formats => :xml
         end
       end
     else
