@@ -1,22 +1,14 @@
 <xml>
-	<ToUserName>
-		<![CDATA[<%= params[:xml][:FromUserName] %>]]>
-	</ToUserName>
-	<FromUserName>
-		<![CDATA[<%= params[:xml][:ToUserName] %>]]>
-	</FromUserName>
-	<CreateTime>
-		<%= Time.now.to_i %>
-	</CreateTime>
-	<MsgType>
-		<![CDATA[voice]]>
-	</MsgType>
-	<Voice>
-		<MediaId>
-			<![CDATA[k8PCoUTQbmmHikK8aXAVnGaf1JVi81yKTdkzl5iN0f-SYJLkRKv90LZ-oJFVvSxF]]>
-		</MediaId>
-	</Voice>
-	<FuncFlag>
-		0
-	</FuncFlag>
+    <ToUserName><![CDATA[<%= params[:xml][:FromUserName] %>]]></ToUserName>
+    <FromUserName><![CDATA[<%= params[:xml][:ToUserName] %>]]></FromUserName>
+    <CreateTime><%= Time.now.to_i %></CreateTime>
+    <MsgType><![CDATA[text]]></MsgType>
+    <Content><![CDATA[Hi~偶是『麦萌』~
+欢迎来到充满魅力声音的『麦萌』世界~
+您可以展示自己的声音，参加『萌主』角逐~
+也可以为他/她的声音评分，支持您心仪的他/她~
+回复您的昵称+空格+性别开始『麦萌』之旅吧~
+范例格式：麦萌君 女
+]]></Content>
+    <FuncFlag>0</FuncFlag>
 </xml>
