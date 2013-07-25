@@ -23,7 +23,9 @@ class RecsController < ApplicationController
       rate.destroy
     end
     @user = User.where(:uid => @rec.uid).first
-    @user.recs[@old_category].delete(@rec.rid)
+    if @user.recs[@new_category] != nil
+      @user.recs[@old_category].delete(@rec.rid)
+    end
     if @user.recs[@new_category] == nil
       @user.recs[@new_category] = {}
     end
