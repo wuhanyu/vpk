@@ -8,6 +8,7 @@
     <th width="250px" >MediaId</th>
     <th width="30px">声音</th>
     <th>1:笑话2:台词3:清唱4:其他</th>
+    <th>评分（1：萌; -1:不萌; 0：中性</th>
     <th></th>
     <th></th>
   </tr>
@@ -22,8 +23,9 @@
     <td style="text-align:center" width="250px" ><%= f.text_field :MediaId %></td>
     <td><a href="<%= rec.rec_url %>">点我</a></td>
     
-	    <td><%= f.text_field :category %></td>
-	    <td><%= f.submit %></td>
+    <td><%= f.text_field :category %></td>
+    <td><%= f.text_field :rate %></td>
+    <td><%= f.submit %></td>
     <% end %>
 	<td><%= link_to '删除', rec, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
