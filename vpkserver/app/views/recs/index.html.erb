@@ -19,7 +19,7 @@
   	<td style="text-align:center"><%= rec.rid %></td>
     <td style="text-align:center"><%= @user.name %></td>
     <td style="text-align:center"><%= @user.menged_count %></td>
-    <%= form_for(rec) do |f| %>
+    <%= form_for(rec, remote: true) do |f| %>
     <td style="text-align:center" width="250px" ><%= f.text_field :MediaId %></td>
     <td><a href="<%= rec.rec_url %>">点我</a></td>
     
