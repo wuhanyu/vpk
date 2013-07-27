@@ -33,8 +33,8 @@ class RecsController < ApplicationController
       
       @user.save
     end
+    @message = "Submit Successfully"
     respond_to do |format|
-      format.html { redirect_to recs_url }
       format.json { head :no_content }
     end
   end
