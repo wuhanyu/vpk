@@ -45,6 +45,8 @@ class WeixinsController < ApplicationController
     @text = params[:xml][:Content]
     if @text != nil
        @text = @text.strip
+    else
+       @text = ""
     end
     @eventkey = params[:xml][:EventKey]
     if @text == "随便听" || @eventkey == "Key_RandomListen"
