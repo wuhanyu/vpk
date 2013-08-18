@@ -102,19 +102,19 @@ class WeixinsController < ApplicationController
     elsif @text == "我的信息" || @text == "我是谁" || @eventkey == "Key_Info"
       @user.rec_count = Rec.where(:uid=>@user.uid).count
       render "myinfo", :formats => :xml
-    elsif @text == "笑话"
+    elsif @text == "笑话" || @eventkey == "Key_SpeakJoke"
       @sampletext = Sample.where(:type => 1).limit(1).offset(rand(Sample.where(:type => 1).count)).first.content
       render "sample", :formats => :xml
     elsif @text == "调戏"
       @texttext = "坏人你调戏我，告诉麻麻听～呜呜跑开"
       render "texttext", :formats => :xml
-    elsif @text == "台词"
+    elsif @text == "台词" || @eventkey == "Key_SpeakLine"
       @sampletext = Sample.where(:type => 2).limit(1).offset(rand(Sample.where(:type => 2).count)).first.content
       render "sample", :formats => :xml
     elsif @text == "三行情书"
       @sampletext = Sample.where(:type => 5).limit(1).offset(rand(Sample.where(:type => 5).count)).first.content
       render "sample2", :formats => :xml
-    elsif @text == "清唱" or @text == "唱给你听"
+    elsif @text == "清唱" || @text == "唱给你听" || @eventkey == "Key_Sing"
       render "onlyvoice", :formats => :xml
     elsif @text == "粽子节"
       @texttext = "哟哟~准备好了咩？按下语音按钮开始录音咯，可以是粽子有关的段子、故事，想说啥说啥，唱两句更好啦:)。多多上传哦，麦萌君很期待ing~麦萌君会给优秀录音的上传者惊喜小礼物哈~" 
