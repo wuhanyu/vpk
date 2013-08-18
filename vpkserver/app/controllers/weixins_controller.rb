@@ -23,6 +23,8 @@ class WeixinsController < ApplicationController
         if params[:xml][:Event] == "subscribe"
           @ccount = User.all.count
           render "welcome", :formats => :xml
+        elsif params[:xml][:Event] == "CLICK"
+          react
         else
           render "errorreply", :formats => :xml
         end
@@ -41,7 +43,8 @@ class WeixinsController < ApplicationController
   # 根据文本消息进行状态变化
   def react
     @text = params[:xml][:Content].strip
-    if @text == "随便听"
+    @eventkey = params[:xml][:EventKey]
+    if @text == "随便听" || @eventkey == "Key_RandomListen"
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
       # render "randomplay", :formats => :xml
       @recs = Rec.where(:MediaId.exists => true, :created_at.gt => Time.now.to_i - 518400)
