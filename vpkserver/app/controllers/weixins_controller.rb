@@ -81,20 +81,20 @@ class WeixinsController < ApplicationController
         @user.user_status = "normal"
         # rateCount
       end
-    elsif (@text.downcase == "pk" or @text == "说")
+    elsif (@text.downcase == "pk" || @text == "说" || @eventkey == "Key_Speak")
       @user.user_status = "pk"
       render "pk", :formats => :xml
-    elsif @text == "排行榜"
+    elsif @text == "排行榜" || @eventkey == "Key_Rank"
       @users = User.where(:overall_rating.gt => 0).order("overall_rating DESC").limit(10)
       render "rank", :formats => :xml
-    elsif @text == "帮助"
+    elsif @text == "帮助" || @eventkey == "Key_Help"
       render "help", :formats => :xml
     elsif @text == "test"
       render "test", :formats => :xml
-    elsif @text == "保存"
+    elsif @text == "保存" || @eventkey == "Key_Save"
       @user.user_status = "normal"
       render "voicereply", :formats => :xml
-    elsif @text == "我的信息" or @text == "我是谁"
+    elsif @text == "我的信息" || @text == "我是谁" || @eventkey == "Key_Info"
       @user.rec_count = Rec.where(:uid=>@user.uid).count
       render "myinfo", :formats => :xml
     elsif @text == "笑话"
@@ -114,7 +114,7 @@ class WeixinsController < ApplicationController
     elsif @text == "粽子节"
       @texttext = "哟哟~准备好了咩？按下语音按钮开始录音咯，可以是粽子有关的段子、故事，想说啥说啥，唱两句更好啦:)。多多上传哦，麦萌君很期待ing~麦萌君会给优秀录音的上传者惊喜小礼物哈~" 
       render "texttext", :formats => :xml        
-    elsif (@text == "听" or @text.downcase == "t")
+    elsif (@text == "听" || @text.downcase == "t" || @eventkey == "Key_Listen")
       @user.user_status = "rate"
       getRate
       @user.rate_at = @rate._id
