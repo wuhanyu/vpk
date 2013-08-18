@@ -141,7 +141,8 @@ class WeixinsController < ApplicationController
     :fromUser => params[:xml][:FromUserName],
     :MediaId => params[:xml][:MediaId],
     :CreateTime => params[:xml][:CreateTime],
-    :event => params[:xml][:Event]
+    :event => params[:xml][:Event],
+    :eventKey => params[:xml][:EventKey]
     )
     @log.save
   end
