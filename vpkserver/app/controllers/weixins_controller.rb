@@ -42,7 +42,10 @@ class WeixinsController < ApplicationController
   private
   # 根据文本消息进行状态变化
   def react
-    @text = params[:xml][:Content].strip
+    @text = params[:xml][:Content]
+    if @text != nil
+       @text = @text.strip
+    end
     @eventkey = params[:xml][:EventKey]
     if @text == "随便听" || @eventkey == "Key_RandomListen"
       # @randomplay = Webrc.limit(1).offset(rand(Webrc.count)).first
