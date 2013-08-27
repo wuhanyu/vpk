@@ -3,6 +3,13 @@ Vpkserver::Application.routes.draw do
   # resources :users
   resource :weixin
   resources :recs
+  resources :charts do
+    collection do
+      get 'basic_line'
+      get 'line_ajax'
+      get 'line_labels'
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
