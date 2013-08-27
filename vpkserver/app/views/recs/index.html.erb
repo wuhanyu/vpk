@@ -1,16 +1,16 @@
 <h1>声音列表</h1>
 <div id="messageshow" class="messageshow"></div>
-<table>
+<table class="table table-bordered table-striped center-table">
   <tr>
-  	<th width="50px" >rid</th>
-    <th width="200px" >用户</th>
-    <th width="50px" >萌粉数</th>
-    <th width="250px" >MediaId</th>
-    <th width="30px">声音连接</th>
-    <th>分类</th>
-    <th>评分</th>
-    <th></th>
-    <th></th>
+  	<th width="5%" >rid</th>
+    <th width="10%" >用户</th>
+    <th width="5%" >萌粉数</th>
+    <th width="30%">MediaId</th>
+    <th width="10%">声音连接</th>
+    <th width="10%">分类</th>
+    <th width="10%">评分</th>
+    <th width="10%"></th>
+    <th width="10%"></th>
   </tr>
 
 <% @recs.reverse_each do |rec| %>
@@ -21,13 +21,13 @@
     <td style="text-align:center"><%= @user.menged_count %></td>
     <%= form_for(rec, remote: true) do |f| %>
     <td style="text-align:center" width="250px" ><%= f.text_field :MediaId %></td>
-    <td><a href="<%= rec.rec_url %>">点我</a></td>
+    <td><a href="<%= rec.rec_url %>" class="btn btn-info">点我</a></td>
     
-    <td><%= f.select(:category, [['笑话', 1], ['台词', 2], ['清唱', 3], ['其他', 4], ['粽子节', 5]]) %></td>
-    <td><%= f.select(:rate, [['中性', 0], ['萌', 1], ['不萌', -1]]) %></td>
-    <td><%= f.submit %></td>
+    <td><%= f.select(:category, [['笑话', 1], ['台词', 2], ['清唱', 3], ['其他', 4], ['粽子节', 5]], {}, :style => "width:80px")%></td>
+    <td><%= f.select(:rate, [['中性', 0], ['萌', 1], ['不萌', -1]], {}, :style => "width:80px") %></td>
+    <td><%= f.submit '更新', :class => 'btn btn-primary' %></td>
     <% end %>
-	<td><%= link_to '删除', rec, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+	<td><%= link_to '删除', rec, method: :delete, data: { confirm: 'Are you sure?' } , :class => 'btn btn-danger' %></td>
   </tr>
 <% end %>
 </table>

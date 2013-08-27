@@ -2,7 +2,7 @@
 <%= link_to '新段子/台词', new_sample_path %>
 <br>
 <br>
-<table border="1" cellpadding="1" cellspacing="1">
+<table class="table table-bordered table-striped">
   <tr>
     <th width="500px">Content</th>
     <th width="100px">Type</th>
@@ -21,8 +21,8 @@
     <% 	@type = "台词" %>
     <% end %>
     <td style="text-align:center"><%= sample.type %> (<%= @type %>)</td>
-    <td style="text-align:center"><%= link_to '编辑', edit_sample_path(sample) %></td>
-    <td style="text-align:center"><%= link_to '删除', sample, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td style="text-align:center"><%= link_to '编辑', edit_sample_path(sample), :class => 'btn btn-primary' %></td>
+    <td style="text-align:center"><%= link_to '删除', sample, method: :delete, data: { confirm: 'Are you sure?' } , :class => 'btn btn-danger' %></td>
   </tr>
 <% end %>
 </table>
